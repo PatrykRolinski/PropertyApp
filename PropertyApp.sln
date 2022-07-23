@@ -14,12 +14,21 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{319CCE31-1F4E-48D6-B645-CEFBCD7067AD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyApp.Application", "PropertyApp.Application\PropertyApp.Application.csproj", "{8A4C98D7-2F9D-4584-AECD-0D77F297C3A3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CC22BC6F-C103-4300-BD99-5AD966615B3A} = {CC22BC6F-C103-4300-BD99-5AD966615B3A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyApp.Domain", "PropertyApp.Domain\PropertyApp.Domain.csproj", "{CC22BC6F-C103-4300-BD99-5AD966615B3A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyApp.Infrastructure", "PropertyApp.Infrastructure\PropertyApp.Infrastructure.csproj", "{CD89933F-707E-40C1-8012-9D746FF2075B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8A4C98D7-2F9D-4584-AECD-0D77F297C3A3} = {8A4C98D7-2F9D-4584-AECD-0D77F297C3A3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyApp.API", "PropertyApp.API\PropertyApp.API.csproj", "{9F4D7C02-A73E-4610-B0D9-B220E85AD0F2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CD89933F-707E-40C1-8012-9D746FF2075B} = {CD89933F-707E-40C1-8012-9D746FF2075B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

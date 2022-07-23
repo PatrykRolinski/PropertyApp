@@ -1,5 +1,4 @@
-﻿
-namespace PropertyApp.Domain.Enums;
+﻿namespace PropertyApp.Domain.Enums;
 
 public enum PropertyType
 {
