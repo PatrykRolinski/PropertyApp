@@ -17,11 +17,13 @@ namespace PropertyApp.Infrastructure.Configuration
             builder.Property(p => p.Description).HasMaxLength(2000).IsRequired();
             builder.Property(P => P.Price).IsRequired();
             builder.Property(p => p.OriginalPrice).IsRequired();
-            builder.Property(P => P.PropertyType).IsRequired();
+            builder.Property(P => P.PropertyType).IsRequired().HasConversion<string>();
             builder.Property(P => P.PropertySize).IsRequired();
-            builder.Property(P => P.PropertyStatus).IsRequired();
+            builder.Property(P => P.PropertyStatus).IsRequired().HasConversion<string>();
+            builder.Property(P => P.MarketType).IsRequired().HasConversion<string>();
             builder.Property(P => P.CreatedDate).IsRequired().HasColumnType("smalldatetime");
             builder.Property(P => P.LastModifiedDate).HasColumnType("smalldatetime");
+            builder.Property(p => p.CreatedBy).IsRequired();
 
             builder.HasOne(p => p.Address)
                 .WithOne(a => a.Property)
