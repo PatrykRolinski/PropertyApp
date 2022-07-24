@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PropertyApp.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,8 @@ namespace PropertyApp.Domain.Common
 {
     public class AuditableEntity
     {
-        public string? CreatedBy { get; set; }
+        public User? CreatedBy { get; set; }
+        public Guid CreatedById { get; set; }
 
         public DateTime CreatedDate { get; set; }
 

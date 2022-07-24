@@ -13,12 +13,11 @@ namespace PropertyApp.Infrastructure
     {
         public PropertyAppContext(DbContextOptions<PropertyAppContext> options) : base(options) { }
 
-        public DbSet<Property> Properties { get; set; }
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<Photo> Photos { get; set; }
-
+        public DbSet<Property> Properties  => Set<Property>();
+        public DbSet<Address> Addresses => Set<Address>();
+        public DbSet<User> Users => Set<User>();
+        public DbSet<Role> Roles => Set<Role>();
+        public DbSet<Photo> Photos => Set<Photo>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             new PropertyConfiguration().Configure(modelBuilder.Entity<Property>());

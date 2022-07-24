@@ -23,7 +23,7 @@ namespace PropertyApp.Infrastructure.Configuration
             builder.Property(P => P.MarketType).IsRequired().HasConversion<string>();
             builder.Property(P => P.CreatedDate).IsRequired().HasColumnType("smalldatetime");
             builder.Property(P => P.LastModifiedDate).HasColumnType("smalldatetime");
-            builder.Property(p => p.CreatedBy).IsRequired();
+            
 
             builder.HasOne(p => p.Address)
                 .WithOne(a => a.Property)
@@ -33,10 +33,12 @@ namespace PropertyApp.Infrastructure.Configuration
             builder.HasMany(p => p.Photos)
                 .WithOne(ph => ph.Property)
                 .HasForeignKey(ph => ph.PropertyId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade);       
 
-
-
+            builder.HasOne(p=> p.CreatedBy)
+                .WithMany(u=> u.CreatedProperties)
+                .HasForeignKey(p=> p.CreatedById)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace PropertyApp.Infrastructure.Configuration
             builder.Property(u => u.FirstName).IsRequired().HasMaxLength(50);           
             builder.Property(u => u.CreatedDate).IsRequired().HasColumnType("smalldatetime");
             builder.Property(u => u.LastModifiedDate).HasColumnType("smalldatetime");
+            builder.Ignore(u => u.CreatedBy);
             builder.HasOne(u => u.Role)
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.RoleId);

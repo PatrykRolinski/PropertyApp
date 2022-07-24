@@ -12,7 +12,11 @@ builder.Services.AddPropertyAppInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
+var scope = app.Services.CreateScope();
+var dummySeeder = scope.ServiceProvider.GetService<SeedData>();
+
 // Configure the HTTP request pipeline.
+dummySeeder.Seed();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

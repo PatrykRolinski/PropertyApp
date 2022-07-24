@@ -12,6 +12,7 @@ public class User : AuditableEntity
     public string? PasswordHash { get; set; }
     public Role? Role { get; set; }
     public int RoleId { get; set; }
+    public ICollection<Property>? CreatedProperties { get; set; }
 
 
 }
