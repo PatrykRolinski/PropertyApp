@@ -3,13 +3,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PropertyApp.Domain.Entities;
 
 
-namespace PropertyApp.Infrastructure.Configuration
+namespace PropertyApp.Infrastructure.Configuration;
+
+internal class RoleConfiguration : IEntityTypeConfiguration<Role>
 {
-    internal class RoleConfiguration : IEntityTypeConfiguration<Role>
+    public void Configure(EntityTypeBuilder<Role> builder)
     {
-        public void Configure(EntityTypeBuilder<Role> builder)
-        {
-            builder.Property(r => r.Name).IsRequired().HasMaxLength(50);
-        }
+        builder.Property(r => r.Name).IsRequired().HasMaxLength(50);
     }
 }

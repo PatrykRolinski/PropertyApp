@@ -1,6 +1,4 @@
-﻿
-
-namespace PropertyApp.Domain.Entities;
+﻿namespace PropertyApp.Domain.Entities;
 
 public class Address
 {

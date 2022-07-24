@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PropertyApp.Domain.Entities;
 
-namespace PropertyApp.Application.Contracts
+namespace PropertyApp.Application.Contracts;
+
+public interface IUserRepository : IBaseRepository<User, Guid>
 {
-    internal class IUserRepository
-    {
-    }
+    public Task<User> FindyByEmail(string email);
 }

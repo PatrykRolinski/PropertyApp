@@ -1,8 +1,6 @@
 ﻿using PropertyApp.Domain.Common;
 
 namespace PropertyApp.Domain.Entities;
-
-
 public class User : AuditableEntity
 {
     public Guid Id { get; set; }

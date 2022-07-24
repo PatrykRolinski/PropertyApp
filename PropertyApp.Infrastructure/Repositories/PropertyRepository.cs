@@ -1,14 +1,11 @@
 ﻿using PropertyApp.Application.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PropertyApp.Domain.Entities;
 
-namespace PropertyApp.Infrastructure.Repositories
+namespace PropertyApp.Infrastructure.Repositories;
+
+public class PropertyRepository : BaseRepository<Property, int>, IPropertyRepository
 {
-    public class PropertyRepository : IPropertyRepository
+    public PropertyRepository(PropertyAppContext context) : base(context)
     {
-
     }
 }

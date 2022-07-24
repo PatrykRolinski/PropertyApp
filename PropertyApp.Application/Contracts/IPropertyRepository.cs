@@ -1,14 +1,9 @@
 ﻿using PropertyApp.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PropertyApp.Application.Contracts
+
+namespace PropertyApp.Application.Contracts;
+
+public interface IPropertyRepository : IBaseRepository<Property, int>
 {
-    internal class IPropertyRepository : IBaseRepository<Property>
-    {
 
-    }
 }
