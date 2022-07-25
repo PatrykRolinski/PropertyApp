@@ -6,6 +6,6 @@ public class Photo
     public string? Url { get; set; }
     public bool IsMain { get; set; }
     public string? PublicId { get; set; }
-    public Property? Property { get; set; }
+    public virtual Property? Property { get; set; }
     public int PropertyId { get; set; }
 }

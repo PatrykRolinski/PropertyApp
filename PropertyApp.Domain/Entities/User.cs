@@ -8,9 +8,9 @@ public class User : AuditableEntity
     public string? LastName { get; set; }
     public string? Email { get; set; }
     public string? PasswordHash { get; set; }
-    public Role? Role { get; set; }
+    public virtual Role? Role { get; set; }
     public int RoleId { get; set; }
-    public ICollection<Property>? CreatedProperties { get; set; }
+    public virtual ICollection<Property>? CreatedProperties { get; set; }
 
 
 }

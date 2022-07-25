@@ -7,6 +7,6 @@ public class Address
     public string? City { get; set; }
     public string? Street { get; set; }
     public byte? Floor { get; set; }
-    public Property? Property { get; set; }
+    public virtual Property? Property { get; set; }
 
 }

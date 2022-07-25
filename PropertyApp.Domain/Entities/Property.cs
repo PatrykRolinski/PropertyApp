@@ -16,9 +16,9 @@ namespace PropertyApp.Domain.Entities;
     public PropertyStatus PropertyStatus { get; set; }
     public MarketType MarketType { get; set; }
     public bool ClosedKitchen { get; set; }
-    public Address? Address { get; set; }
+    public virtual Address? Address { get; set; }
     public int AddressId { get; set; }
-    public ICollection<Photo>? Photos { get; set; }
+    public virtual ICollection<Photo>? Photos { get; set; }
 
 
     }

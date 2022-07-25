@@ -4,7 +4,7 @@ namespace PropertyApp.Domain.Common
 {
     public class AuditableEntity
     {
-        public User? CreatedBy { get; set; }
+        public virtual User? CreatedBy { get; set; }
         public Guid CreatedById { get; set; }
 
         public DateTime CreatedDate { get; set; }
