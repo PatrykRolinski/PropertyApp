@@ -40,6 +40,7 @@ public class BaseRepository<T, IdType> : IBaseRepository<T, IdType> where T : cl
 
     public async Task UpdateAsync(T entity)
     {
+        
         _context.Update(entity);
         await _context.SaveChangesAsync();
     }

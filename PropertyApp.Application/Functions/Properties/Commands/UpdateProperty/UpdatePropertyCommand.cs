@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using PropertyApp.Domain.Enums;
 
-namespace PropertyApp.Application.Functions.Properties.Commands.AddProperty;
+namespace PropertyApp.Application.Functions.Properties.Commands.UpdateProperty;
 
-public class CreatePropertyCommand : IRequest<int>
+public class UpdatePropertyCommand : IRequest
 {
+    public  int Id { get; set; }
     public string? Description { get; set; }
     public int OriginalPrice { get; set; }
     public int Price { get; set; }
@@ -20,5 +21,4 @@ public class CreatePropertyCommand : IRequest<int>
     public byte? Floor { get; set; }
     public string? MainPhotoUrl { get; set; }
     public string? PublicId { get; set; }
-    
 }
