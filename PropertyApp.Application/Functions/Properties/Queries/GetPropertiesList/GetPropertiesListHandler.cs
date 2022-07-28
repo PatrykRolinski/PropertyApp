@@ -11,6 +11,7 @@ public class GetPropertiesListHandler : IRequestHandler<GetPropertiesListQuery, 
 
     public GetPropertiesListHandler(IPropertyRepository propertyRepository, IMapper mapper)
     {
+        
         _propertyRepository = propertyRepository;
         _mapper = mapper;
     }

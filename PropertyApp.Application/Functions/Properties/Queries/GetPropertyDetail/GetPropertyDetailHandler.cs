@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using PropertyApp.Application.Contracts;
+using PropertyApp.Application.Exceptions;
 
 namespace PropertyApp.Application.Functions.Properties.Queries.GetPropertyDetail;
 
@@ -18,7 +19,11 @@ public class GetPropertyDetailHandler : IRequestHandler<GetPropertyDetailQuery, 
     public async Task<GetPropertyDetailDto> Handle(GetPropertyDetailQuery request, CancellationToken cancellationToken)
     {
       var property=await _propertyRepository.GetByIdAsync(request.Id);
-      var propertyDetail= _mapper.Map<GetPropertyDetailDto>(property);
+        if (property == null)
+        {
+            throw new NotFoundException($"Property with {request.Id} id not found");
+        }
+        var propertyDetail= _mapper.Map<GetPropertyDetailDto>(property);
        return propertyDetail;
 
     }

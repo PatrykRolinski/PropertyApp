@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PropertyApp.Application.Contracts;
+using PropertyApp.Application.Exceptions;
 
 namespace PropertyApp.Infrastructure.Repositories;
 
@@ -27,14 +28,15 @@ public class BaseRepository<T, IdType> : IBaseRepository<T, IdType> where T : cl
 
     public async Task<IReadOnlyList<T>> GetAllAsync()
     {
-       var result = await _context.Set<T>().ToListAsync();
+        var result = await _context.Set<T>().ToListAsync();
         return result;
     }
 
     public async Task<T> GetByIdAsync(IdType id)
     {
+        // NOTE: Is Exceptions good Idea in repository?
         var result= await _context.Set<T>().FindAsync(id);
-        if (result == null) throw new Exception();
+       // if (result == null) throw new NotFoundException($"Item with {id} not found");
         return result;
     }
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using PropertyApp.Application.Contracts;
 using PropertyApp.Domain.Entities;
@@ -18,6 +19,9 @@ public class CreatePropertyHandler : IRequestHandler<CreatePropertyCommand, int>
 
     public async Task<int> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
     {
+        var validator= new CreatePropertyValidator();
+        await validator.ValidateAndThrowAsync(request, cancellationToken);
+
        var mappedProperty= _mapper.Map<Property>(request);
         // To do Add UserId
         mappedProperty.CreatedById = Guid.Parse("5F4AF149-A2BD-416F-34AB-08DA6D872DB6");
