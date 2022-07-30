@@ -17,16 +17,16 @@ public class SeedData
     {
         if (_context.Database.CanConnect())
         {
-            if (!_context.Roles.Any())
-            {
-                var roles = new List<Role>()
-                {
-                    new Role(){ Name = "Member"},
-                    new Role(){ Name ="Manager"}
-                };
-                _context.Roles.AddRange(roles);
-                _context.SaveChanges();
-            }
+            //if (!_context.Roles.Any())
+            //{
+            //    var roles = new List<Role>()
+            //    {
+            //        new Role(){ Name = "Member"},
+            //        new Role(){ Name ="Manager"}
+            //    };
+            //    _context.Roles.AddRange(roles);
+            //    _context.SaveChanges();
+            //}
             if (!_context.Properties.Any())
             {
             var addressGenerator = new Faker<Address>()
@@ -36,16 +36,16 @@ public class SeedData
                    .RuleFor(a => a.Floor, f => f.Random.Byte(1,10));
 
             
-            var roles = new[] { "Member", "Manager" };
-            var roleGenerator = new Faker<Role>()
-                .RuleFor(r => r.Name, f => f.PickRandom(roles));
+            Role[] roles = new[] { new Role { Name = "Member" }, new Role { Name = "Manager" } };
+            //var roleGenerator = new Faker<Role>()
+            //    .RuleFor(r => r.Name, f => f.PickRandom(roles));
 
             var userGenerator = new Faker<User>()
                 .RuleFor(u => u.FirstName, f => f.Name.FirstName())
                 .RuleFor(u => u.LastName, f => f.Name.LastName())
                 .RuleFor(u => u.Email, f => f.Person.Email)
                 .RuleFor(u => u.PasswordHash, f => f.Internet.Password())
-                .RuleFor(u => u.Role, f => roleGenerator.Generate())
+                .RuleFor(u => u.Role, f => f.PickRandom(roles))
                 .RuleFor(u=> u.CreatedDate,f => f.Date.Between(new DateTime(2000, 01, 10), new DateTime(2020, 01, 10)));
                 
 

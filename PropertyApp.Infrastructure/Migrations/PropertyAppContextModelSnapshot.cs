@@ -50,7 +50,7 @@ namespace PropertyApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("PropertyApp.Domain.Entities.Photo", b =>
@@ -78,7 +78,7 @@ namespace PropertyApp.Infrastructure.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("Photos");
+                    b.ToTable("Photos", (string)null);
                 });
 
             modelBuilder.Entity("PropertyApp.Domain.Entities.Property", b =>
@@ -143,7 +143,7 @@ namespace PropertyApp.Infrastructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Properties");
+                    b.ToTable("Properties", (string)null);
                 });
 
             modelBuilder.Entity("PropertyApp.Domain.Entities.Role", b =>
@@ -161,7 +161,7 @@ namespace PropertyApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("PropertyApp.Domain.Entities.User", b =>
@@ -206,7 +206,7 @@ namespace PropertyApp.Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("PropertyApp.Domain.Entities.Photo", b =>
