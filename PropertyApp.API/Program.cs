@@ -29,6 +29,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddPropertyAppInfrastructure(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddScoped<ExceptionHandlingMiddleware>();
+builder.Services.AddCors();
 
 
 
@@ -47,7 +48,10 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseRouting();
+    app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(builder.Configuration.GetSection("AllowedOrigins").GetChildren().ToArray().Select(c => c.Value).ToArray())
+                    ); ;
+    app.UseAuthorization();
 
 app.MapControllers();
 
