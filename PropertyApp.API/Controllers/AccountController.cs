@@ -36,5 +36,6 @@ namespace PropertyApp.API.Controllers
             await _mediator.Send(new VerifyUserCommand { Token=token});
             return Ok("Thank you for veryfing account, now you can log into your account");
         }
+        
     }
 }
