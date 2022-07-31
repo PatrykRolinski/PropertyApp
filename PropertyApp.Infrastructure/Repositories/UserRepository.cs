@@ -17,5 +17,10 @@ public class UserRepository : BaseRepository<User, Guid>, IUserRepository
         return userWithEmail;
 
     }
+    public async Task<User> FindyByVerificationToken(string token)
+    {
+        User userWithToken = await _context.Users.FirstOrDefaultAsync(x => x.VerificationToken == token);
+        return userWithToken;
 
+    }
 }

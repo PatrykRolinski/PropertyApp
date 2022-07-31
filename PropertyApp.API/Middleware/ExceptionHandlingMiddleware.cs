@@ -23,6 +23,11 @@ public class ExceptionHandlingMiddleware : IMiddleware
             context.Response.StatusCode = 404;
             await context.Response.WriteAsync(notFoundException.Message);
         }
+        catch (NotVerifiedException notVerifiedException)
+        {
+            context.Response.StatusCode = 405;
+            await context.Response.WriteAsync(notVerifiedException.Message);
+        }
         catch(ForbiddenException forbiddenException)
         {
             context.Response.StatusCode = 403;

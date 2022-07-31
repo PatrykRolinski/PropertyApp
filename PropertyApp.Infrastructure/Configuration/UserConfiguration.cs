@@ -18,5 +18,8 @@ internal class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasOne(u => u.Role)
             .WithMany(r => r.Users)
             .HasForeignKey(u => u.RoleId);
+        builder.Property(u => u.VerificationToken).IsRequired();
+        builder.Property(u => u.VerifiedAt).HasColumnType("smalldatetime");
+        builder.Property(u => u.ResetTokenExpires).HasColumnType("smalldatetime");
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PropertyApp.Application.Functions.Users.Commands.LoginUser;
 using PropertyApp.Application.Functions.Users.Commands.RegisterUser;
+using PropertyApp.Application.Functions.Users.Commands.VerifyUser;
 
 namespace PropertyApp.API.Controllers
 {
@@ -28,6 +29,12 @@ namespace PropertyApp.API.Controllers
         {
           var token= await _mediator.Send(loginUserCommand);
             return Ok(token);
+        }
+        [HttpPost("verify")]
+        public async Task<ActionResult> VerifyUser([FromQuery] string token)
+        {
+            await _mediator.Send(new VerifyUserCommand { Token=token});
+            return Ok("Thank you for veryfing account, now you can log into your account");
         }
     }
 }

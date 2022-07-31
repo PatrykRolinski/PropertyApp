@@ -42,6 +42,12 @@ public class LoginUserHandler : IRequestHandler<LoginUserCommand, string>
             throw new ForbiddenException("Invalid email or password");
         }
 
+        if (user.VerifiedAt == null)
+        {
+            throw new NotVerifiedException("You must verify your account, check email");
+            
+        }
+
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),

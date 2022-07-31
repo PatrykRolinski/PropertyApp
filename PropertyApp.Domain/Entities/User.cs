@@ -8,6 +8,11 @@ public class User : AuditableEntity
     public string? LastName { get; set; }
     public string? Email { get; set; }
     public string? PasswordHash { get; set; }
+    public string? VerificationToken { get; set; }
+    public DateTime? VerifiedAt { get; set; }
+    public string? PasswordResetToken { get; set; }
+    public DateTime? ResetTokenExpires { get; set; }
+
     public virtual Role? Role { get; set; }
     public int RoleId { get; set; }
     public virtual ICollection<Property>? CreatedProperties { get; set; }
