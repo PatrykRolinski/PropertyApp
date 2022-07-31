@@ -13,8 +13,9 @@ public class UserRepository : BaseRepository<User, Guid>, IUserRepository
 
     public async Task<User> FindyByEmail(string email)
     {
-     var user= await _context.Users.FirstOrDefaultAsync(u=> u.Email == email);
-     if (user == null) throw new Exception();           
-     return user;
+        User userWithEmail = await _context.Users.FirstOrDefaultAsync(x => x.Email.Equals(email));
+        return userWithEmail;
+
     }
+
 }

@@ -19,7 +19,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand>
 
     public async Task<Unit> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
-        var validator = new RegisterUserValidator();
+        var validator = new RegisterUserValidator(_userRepository);
         await validator.ValidateAndThrowAsync(request, cancellationToken);
         var newUser = new User()
         {
