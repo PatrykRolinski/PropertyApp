@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PropertyApp.Application.Functions.Users.Commands.LoginUser;
 using PropertyApp.Application.Functions.Users.Commands.RegisterUser;
 
 namespace PropertyApp.API.Controllers
@@ -22,6 +22,12 @@ namespace PropertyApp.API.Controllers
         {
            await _mediator.Send(registerUserCommand);
            return Ok();
+        }
+        [HttpPost("login")]
+        public async Task<ActionResult<string>> LoginUser([FromBody] LoginUserCommand loginUserCommand)
+        {
+          var token= await _mediator.Send(loginUserCommand);
+            return Ok(token);
         }
     }
 }

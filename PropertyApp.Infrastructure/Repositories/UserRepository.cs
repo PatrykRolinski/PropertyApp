@@ -13,7 +13,7 @@ public class UserRepository : BaseRepository<User, Guid>, IUserRepository
 
     public async Task<User> FindyByEmail(string email)
     {
-        User userWithEmail = await _context.Users.FirstOrDefaultAsync(x => x.Email.Equals(email));
+        User userWithEmail = await _context.Users.FirstOrDefaultAsync(x => x.Email.ToLower()== email.ToLower());
         return userWithEmail;
 
     }

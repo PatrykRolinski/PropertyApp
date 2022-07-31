@@ -17,16 +17,15 @@ public class SeedData
     {
         if (_context.Database.CanConnect())
         {
-            //if (!_context.Roles.Any())
-            //{
-            //    var roles = new List<Role>()
-            //    {
-            //        new Role(){ Name = "Member"},
-            //        new Role(){ Name ="Manager"}
-            //    };
-            //    _context.Roles.AddRange(roles);
-            //    _context.SaveChanges();
-            //}
+            if (!_context.Roles.Any(x=>x.Name=="Admin"))
+            {
+                var roles = new List<Role>()
+                {
+                    new Role(){ Name = "Admin"},                   
+                };
+                _context.Roles.AddRange(roles);
+                _context.SaveChanges();
+            }
             if (!_context.Properties.Any())
             {
             var addressGenerator = new Faker<Address>()

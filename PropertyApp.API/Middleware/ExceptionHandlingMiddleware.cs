@@ -23,6 +23,11 @@ public class ExceptionHandlingMiddleware : IMiddleware
             context.Response.StatusCode = 404;
             await context.Response.WriteAsync(notFoundException.Message);
         }
+        catch(ForbiddenException forbiddenException)
+        {
+            context.Response.StatusCode = 403;
+            await context.Response.WriteAsync(forbiddenException.Message);
+        }
         catch (FluentValidation.ValidationException ex)
         {
             context.Response.StatusCode = 500;

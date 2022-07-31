@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Tokens;
 using NLog;
 using NLog.Web;
@@ -24,6 +25,7 @@ var builder = WebApplication.CreateBuilder(args);
     var authenticationSettings = new AuthenticationSetting();
     builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
 
+    builder.Services.AddSingleton(authenticationSettings);
     builder.Services.AddAuthentication(option =>
     {
         option.DefaultAuthenticateScheme = "Bearer";
@@ -73,12 +75,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseAuthentication();
 app.UseHttpsRedirection();
 
 app.UseRouting();
-    app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(builder.Configuration.GetSection("AllowedOrigins").GetChildren().ToArray().Select(c => c.Value).ToArray())
-                    ); ;
-    app.UseAuthorization();
+app.UseCors(policy => policy
+.AllowAnyHeader()
+.AllowAnyMethod()
+.AllowCredentials()
+.WithOrigins(builder.Configuration.GetSection("AllowedOrigins").GetChildren().ToArray().Select(c => c.Value).ToArray()));
+app.UseAuthorization();
 
 app.MapControllers();
 
