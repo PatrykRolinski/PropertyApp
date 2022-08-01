@@ -33,6 +33,11 @@ public class ExceptionHandlingMiddleware : IMiddleware
             context.Response.StatusCode = 403;
             await context.Response.WriteAsync(forbiddenException.Message);
         }
+        catch(ResetPasswordException resetPasswordException)
+        {
+            context.Response.StatusCode = 500;
+            await context.Response.WriteAsync(resetPasswordException.Message);
+        }
         catch (FluentValidation.ValidationException ex)
         {
             context.Response.StatusCode = 500;
