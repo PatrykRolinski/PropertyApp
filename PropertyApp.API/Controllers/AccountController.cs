@@ -36,7 +36,7 @@ namespace PropertyApp.API.Controllers
         public async Task<ActionResult> VerifyUser([FromQuery] string token)
         {
             await _mediator.Send(new VerifyUserCommand { Token=token});
-            return Ok("Thank you for veryfing account, now you can log into your account");
+            return Ok();
         }
         [HttpPost("forgot-password")]
         public async Task<ActionResult> ForgotPassword([FromBody] string email)

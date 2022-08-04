@@ -1,7 +1,11 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using PropertyApp.Application.Contracts;
+using PropertyApp.Application.Contracts.IServices;
+using PropertyApp.Application.Services.EmailService;
+using PropertyApp.Domain.Common;
 using PropertyApp.Domain.Entities;
 using System.Security.Cryptography;
 
@@ -11,11 +15,15 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand>
 {
     private readonly IPasswordHasher<User> _passwordHasher;
     private readonly IUserRepository _userRepository;
+    private readonly IEmailService _emailService;
+    private readonly IOptions<EmailSettings> _emailConfig;
 
-    public RegisterUserHandler(IPasswordHasher<User> passwordHasher, IUserRepository userRepository)
+    public RegisterUserHandler(IPasswordHasher<User> passwordHasher, IUserRepository userRepository, IEmailService emailService, IOptions<EmailSettings> emailConfig)
     {
         _passwordHasher = passwordHasher;
         _userRepository = userRepository;
+        _emailService = emailService;
+        _emailConfig = emailConfig;
     }
     
     public async Task<Unit> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -33,7 +41,13 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand>
             VerificationToken=CreateVerificationToken()
         };
 
-   
+        var emailDto = new EmailDto()
+        {
+            To = newUser.Email,
+            Subject = "Verfify your account in PropertyApp",
+            Body = $"Click to verify : http://localhost:4200/account/verify?token={newUser.VerificationToken}"
+        };
+        _emailService.SendEmail(emailDto, _emailConfig);
 
         var hashedPassword= _passwordHasher.HashPassword(newUser, request.Password);
       newUser.PasswordHash = hashedPassword;

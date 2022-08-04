@@ -21,7 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Host.UseNLog();
 
     // Setup JWT Authentication
-
+    // TODO: Change for IOptions?"
     var authenticationSettings = new AuthenticationSetting();
     builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
 
@@ -56,7 +56,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPropertyAppInfrastructure(builder.Configuration);
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddScoped<ExceptionHandlingMiddleware>();
 builder.Services.AddCors();
 
