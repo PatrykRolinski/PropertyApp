@@ -6,5 +6,5 @@ namespace PropertyApp.Application.Contracts.IServices;
 
 public interface IEmailService
 {
-    public void SendEmail(EmailDto email, IOptions<EmailSettings> config);
+    public Task SendEmailAsync(EmailDto email, IOptions<EmailSettings> config);
 }

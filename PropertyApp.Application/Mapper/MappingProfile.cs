@@ -16,11 +16,11 @@ internal class MappingProfile : Profile
                 .ForMember(dest => dest.MainPhotoUrl, opt => opt.MapFrom(src =>src.Photos==null? null: src.Photos.FirstOrDefault(x => x.IsMain).Url))
                 .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.Address ==null? null : src.Address.City))
                 .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Address == null? null: src.Address.Country));
-                
+
 
         CreateMap<CreatePropertyCommand, Property>()
-            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => new Address() { City = src.City, Country = src.Country, Street = src.Street, Floor=src.Floor }))
-            .ForMember(dest => dest.Photos, opt => opt.MapFrom(src => new List<Photo>() { new Photo() { IsMain = true, Url = src.MainPhotoUrl } }));
+            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => new Address() { City = src.City, Country = src.Country, Street = src.Street, Floor = src.Floor }));
+            
 
         CreateMap<UpdatePropertyCommand, Property>()
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => new Address() { City = src.City, Country = src.Country, Street = src.Street, Floor = src.Floor }))

@@ -8,7 +8,7 @@ namespace PropertyApp.Application.Services.EmailService;
 
 public class EmailService : IEmailService
 {
-    public void SendEmail(EmailDto emailDto, IOptions<EmailSettings> config)
+    public async Task SendEmailAsync(EmailDto emailDto, IOptions<EmailSettings> config)
     {
         var email = new MimeMessage();
         email.From.Add(MailboxAddress.Parse(config.Value.EmailUserName));
@@ -18,7 +18,9 @@ public class EmailService : IEmailService
         using var smtp = new SmtpClient();
         smtp.Connect(config.Value.EmailHost, 465, MailKit.Security.SecureSocketOptions.SslOnConnect);
         smtp.Authenticate(config.Value.EmailUserName, config.Value.EmailPassword);
-        smtp.Send(email);
-        smtp.Disconnect(true);       
+        await smtp.SendAsync(email);
+        smtp.Disconnect(true);
+        
+        
     }
 }

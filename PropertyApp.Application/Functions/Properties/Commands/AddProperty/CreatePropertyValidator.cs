@@ -26,7 +26,7 @@ public class CreatePropertyValidator : AbstractValidator<CreatePropertyCommand>
             .MaximumLength(100); 
 
         RuleFor(p=> p.ClosedKitchen)
-            .NotEmpty();
+            .Must(x => x == false || x == true);
 
         // TODO: FIX Enum Validation
         RuleFor(p => p.MarketType)

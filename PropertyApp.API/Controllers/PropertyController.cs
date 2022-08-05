@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PropertyApp.Application.Functions.Properties.Commands.AddProperty;
 using PropertyApp.Application.Functions.Properties.Commands.DeleteProperty;
@@ -33,8 +34,9 @@ public class PropertyController : ControllerBase
         return Ok(propertyDto);
     }
     [HttpPost]
-    public async Task<ActionResult> AddProperty([FromBody] CreatePropertyCommand createPropertyCommand)
+    public async Task<ActionResult> AddProperty([FromForm] CreatePropertyCommand createPropertyCommand)
     {
+       
         var id = await _mediator.Send(createPropertyCommand);
         return Created($"/api/property/{id}", null);
     }

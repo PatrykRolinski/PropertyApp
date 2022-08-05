@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using PropertyApp.Domain.Enums;
 
 namespace PropertyApp.Application.Functions.Properties.Commands.AddProperty;
@@ -13,12 +14,11 @@ public class CreatePropertyCommand : IRequest<int>
     public byte NumberOfRooms { get; set; }
     public PropertyStatus PropertyStatus { get; set; }
     public MarketType MarketType { get; set; }
-    public bool ClosedKitchen { get; set; }
+    public bool ClosedKitchen { get; set; } = false;
     public string? Country { get; set; }
     public string? City { get; set; }
     public string? Street { get; set; }
     public byte? Floor { get; set; }
-    public string? MainPhotoUrl { get; set; }
-    public string? PublicId { get; set; }
+    public IFormFile? PhotoFile { get; set; }
     
 }

@@ -47,7 +47,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand>
             Subject = "Verfify your account in PropertyApp",
             Body = $"Click to verify : http://localhost:4200/account/verify?token={newUser.VerificationToken}"
         };
-        _emailService.SendEmail(emailDto, _emailConfig);
+       await _emailService.SendEmailAsync(emailDto, _emailConfig);
 
         var hashedPassword= _passwordHasher.HashPassword(newUser, request.Password);
       newUser.PasswordHash = hashedPassword;

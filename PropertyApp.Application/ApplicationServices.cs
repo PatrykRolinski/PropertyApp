@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PropertyApp.Application.Contracts.IServices;
 using PropertyApp.Application.Services.EmailService;
+using PropertyApp.Application.Services.PhotoService;
 using PropertyApp.Domain.Common;
 using PropertyApp.Domain.Entities;
 using System.Reflection;
@@ -20,6 +21,8 @@ public static class ApplicationServices
         ValidatorOptions.Global.LanguageManager.Enabled = false;
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
         services.Configure<EmailSettings>(config.GetSection("EmailService"));
+        services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+        services.AddScoped<IPhotoService, PhotoService>();
         services.AddScoped<IEmailService, EmailService>();
         
         return services;
