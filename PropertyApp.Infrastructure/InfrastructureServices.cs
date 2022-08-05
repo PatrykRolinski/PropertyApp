@@ -17,6 +17,7 @@ namespace PropertyApp.Infrastructure
             services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPropertyRepository, PropertyRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<SeedData>();
             return services;
         }
