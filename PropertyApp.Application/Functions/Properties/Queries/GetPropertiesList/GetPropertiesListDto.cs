@@ -4,6 +4,7 @@ namespace PropertyApp.Application.Functions.Properties.Queries.GetPropertiesList
 
 public class GetPropertiesListDto
 {
+    public int Id { get; set; }
     public int Price { get; set; }
     public PropertyType PropertyType { get; set; }
     public ushort PropertySize { get; set; }
