@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PropertyApp.Application.Contracts.IServices;
+using PropertyApp.Application.Services.CurrentUserService;
 using PropertyApp.Application.Services.EmailService;
 using PropertyApp.Application.Services.PhotoService;
 using PropertyApp.Domain.Common;
@@ -24,6 +25,7 @@ public static class ApplicationServices
         services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
         services.AddScoped<IPhotoService, PhotoService>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
         
         return services;
     }

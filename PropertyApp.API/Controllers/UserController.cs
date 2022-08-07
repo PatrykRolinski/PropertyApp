@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PropertyApp.Application.Functions.Users.Queries;
+using PropertyApp.Application.Functions.Users.Queries.GetPropertiesListCreatedByUser;
+using PropertyApp.Application.Functions.Users.Queries.GetUsersList;
 
 namespace PropertyApp.API.Controllers
 {
@@ -15,12 +16,19 @@ namespace PropertyApp.API.Controllers
             _mediator = mediator;
         }
     [HttpGet]
-    public async Task<ActionResult> GetAllUsers()
+    public async Task<ActionResult<List<GetUsersListDto>>> GetAllUsers()
     {
          var usersListDto=  await _mediator.Send(new GetUsersListQuery());
            return Ok(usersListDto);
 
     }
+    [HttpGet("created-properties")]
+     public async Task<ActionResult<List<GetPropertiesListCreatedByUserDto>>> GetCreatedPropertiesByUser()
+    {
+        var propertyCreatedByUser= await _mediator.Send(new GetPropertiesListCreatedByUserQuery());
+         return Ok(propertyCreatedByUser);
+    }
+
 
     }
 }

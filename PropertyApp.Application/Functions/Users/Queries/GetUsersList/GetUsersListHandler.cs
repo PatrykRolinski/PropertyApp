@@ -2,7 +2,7 @@
 using MediatR;
 using PropertyApp.Application.Contracts;
 
-namespace PropertyApp.Application.Functions.Users.Queries;
+namespace PropertyApp.Application.Functions.Users.Queries.GetUsersList;
 
 public class GetUsersListHandler : IRequestHandler<GetUsersListQuery, List<GetUsersListDto>>
 {

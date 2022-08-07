@@ -12,12 +12,14 @@ public class CreatePropertyHandler : IRequestHandler<CreatePropertyCommand, int>
     private readonly IPropertyRepository _propertyRepository;
     private readonly IMapper _mapper;
     private readonly IPhotoService _photoservice;
+    private readonly ICurrentUserService _currentUser;
 
-    public CreatePropertyHandler(IPropertyRepository propertyRepository,IMapper mapper, IPhotoService photoservice)
+    public CreatePropertyHandler(IPropertyRepository propertyRepository,IMapper mapper, IPhotoService photoservice, ICurrentUserService currentUser)
     {
         _propertyRepository = propertyRepository;
         _mapper = mapper;
         _photoservice = photoservice;
+        _currentUser = currentUser;
     }
 
     public async Task<int> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
@@ -39,8 +41,8 @@ public class CreatePropertyHandler : IRequestHandler<CreatePropertyCommand, int>
 
         }
 
-        // To do Add UserId
-        mappedProperty.CreatedById = Guid.Parse("925900AA-96F4-4617-EF74-08DA76507A32");
+               
+        mappedProperty.CreatedById = Guid.Parse(_currentUser?.UserId);
         mappedProperty.CreatedDate = DateTime.UtcNow;
         mappedProperty.OriginalPrice = mappedProperty.Price;
        var property=await _propertyRepository.AddAsync(mappedProperty);
