@@ -45,7 +45,8 @@ public class SeedData
                 .RuleFor(u => u.Email, f => f.Person.Email)
                 .RuleFor(u => u.PasswordHash, f => f.Internet.Password())
                 .RuleFor(u => u.Role, f => f.PickRandom(roles))
-                .RuleFor(u=> u.CreatedDate,f => f.Date.Between(new DateTime(2000, 01, 10), new DateTime(2020, 01, 10)));
+                .RuleFor(u=> u.CreatedDate,f => f.Date.Between(new DateTime(2000, 01, 10), new DateTime(2020, 01, 10)))
+                .RuleFor(u=> u.VerificationToken,f=>f.Commerce.Ean8());
                 
 
             var photoGenerator = new Faker<Photo>()
@@ -66,7 +67,7 @@ public class SeedData
                 .RuleFor(p=> p.Address, f=>addressGenerator.Generate())
                 .RuleFor(p=> p.CreatedBy, f=> userGenerator.Generate())
                 .RuleFor(p=> p.CreatedDate, f=> f.Date.Between(new DateTime(2000,01,10), new DateTime(2020,01,10)))
-                .RuleFor(p=> p.Photos, f=> photoGenerator.Generate(3).ToList());
+                .RuleFor(p=> p.Photos, f=> photoGenerator.Generate(5).ToList());
 
             var property = propertyGenerator.Generate(190);
             _context.AddRange(property);
