@@ -21,5 +21,12 @@ internal class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.VerificationToken).IsRequired();
         builder.Property(u => u.VerifiedAt).HasColumnType("smalldatetime");
         builder.Property(u => u.ResetTokenExpires).HasColumnType("smalldatetime");
+
+        builder.HasMany(u=> u.CreatedProperties)
+            .WithOne(p=> p.CreatedBy)
+            .HasForeignKey(p=> p.CreatedById)
+            .OnDelete(DeleteBehavior.Cascade); 
+
+        
     }
 }

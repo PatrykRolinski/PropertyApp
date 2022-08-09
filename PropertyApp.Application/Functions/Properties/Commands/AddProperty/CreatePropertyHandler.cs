@@ -3,6 +3,7 @@ using FluentValidation;
 using MediatR;
 using PropertyApp.Application.Contracts;
 using PropertyApp.Application.Contracts.IServices;
+using PropertyApp.Application.Exceptions;
 using PropertyApp.Domain.Entities;
 
 namespace PropertyApp.Application.Functions.Properties.Commands.AddProperty;
@@ -40,9 +41,13 @@ public class CreatePropertyHandler : IRequestHandler<CreatePropertyCommand, int>
             { new Photo(){Url= result.SecureUrl.AbsoluteUri, IsMain=true, PublicId= result.PublicId}};
 
         }
+        var userId = _currentUser.UserId;
+        if (userId == null)
+        {
+            throw new NotFoundException($"User with id {userId} is not found");
+        }
 
-               
-        mappedProperty.CreatedById = Guid.Parse(_currentUser?.UserId);
+        mappedProperty.CreatedById = Guid.Parse(userId);
         mappedProperty.CreatedDate = DateTime.UtcNow;
         mappedProperty.OriginalPrice = mappedProperty.Price;
        var property=await _propertyRepository.AddAsync(mappedProperty);
