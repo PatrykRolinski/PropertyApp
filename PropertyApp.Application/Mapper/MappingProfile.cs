@@ -21,11 +21,11 @@ internal class MappingProfile : Profile
 
         CreateMap<CreatePropertyCommand, Property>()
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => new Address() { City = src.City, Country = src.Country, Street = src.Street, Floor = src.Floor }));
-            
+
 
         CreateMap<UpdatePropertyCommand, Property>()
-            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => new Address() { City = src.City, Country = src.Country, Street = src.Street, Floor = src.Floor }))
-            .ForMember(dest => dest.Photos, opt => opt.MapFrom(src => new List<Photo>() { new Photo() { IsMain = true, Url = src.MainPhotoUrl } }));
+            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => new Address() { City = src.City, Country = src.Country, Street = src.Street, Floor = src.Floor }));
+            
 
         CreateMap<Photo, PhotoDto>();
 

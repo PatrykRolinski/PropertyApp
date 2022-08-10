@@ -19,6 +19,5 @@ public class UpdatePropertyCommand : IRequest
     public string? City { get; set; }
     public string? Street { get; set; }
     public byte? Floor { get; set; }
-    public string? MainPhotoUrl { get; set; }
-    public string? PublicId { get; set; }
+    
 }
