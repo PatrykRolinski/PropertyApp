@@ -18,7 +18,7 @@ public class GetPropertiesListHandler : IRequestHandler<GetPropertiesListQuery, 
 
     public async Task<List<GetPropertiesListDto>> Handle(GetPropertiesListQuery request, CancellationToken cancellationToken)
     {
-        var all = await _propertyRepository.GetAllAsync();
-        return _mapper.Map<List<GetPropertiesListDto>>(all);        
+        var propertyList = await _propertyRepository.GetAllAsync();
+        return _mapper.Map<List<GetPropertiesListDto>>(propertyList);        
     }
 }

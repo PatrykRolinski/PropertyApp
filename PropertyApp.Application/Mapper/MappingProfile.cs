@@ -6,6 +6,7 @@ using PropertyApp.Application.Functions.Users.Queries.GetPropertiesListCreatedBy
 using PropertyApp.Application.Functions.Properties.Queries.GetPropertyDetail;
 using PropertyApp.Application.Functions.Users.Queries.GetUsersList;
 using PropertyApp.Domain.Entities;
+using PropertyApp.Application.Functions.Photos.Queries;
 
 namespace PropertyApp.Application.Mapper;
 
@@ -28,6 +29,8 @@ internal class MappingProfile : Profile
             
 
         CreateMap<Photo, PhotoDto>();
+
+        CreateMap<Photo, GetPhotosListForPropertyDto>();
 
         CreateMap<Property, GetPropertyDetailDto>()
              .ForMember(dest => dest.MainPhotoUrl, opt => opt.MapFrom(src => src.Photos == null ? null : src.Photos.FirstOrDefault(x => x.IsMain).Url))

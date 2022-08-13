@@ -12,14 +12,14 @@ public class CreatePropertyHandler : IRequestHandler<CreatePropertyCommand, int>
 {
     private readonly IPropertyRepository _propertyRepository;
     private readonly IMapper _mapper;
-    private readonly IPhotoService _photoservice;
+    private readonly IPhotoService _photoService;
     private readonly ICurrentUserService _currentUser;
 
-    public CreatePropertyHandler(IPropertyRepository propertyRepository,IMapper mapper, IPhotoService photoservice, ICurrentUserService currentUser)
+    public CreatePropertyHandler(IPropertyRepository propertyRepository,IMapper mapper, IPhotoService photoService, ICurrentUserService currentUser)
     {
         _propertyRepository = propertyRepository;
         _mapper = mapper;
-        _photoservice = photoservice;
+        _photoService = photoService;
         _currentUser = currentUser;
     }
 
@@ -35,7 +35,7 @@ public class CreatePropertyHandler : IRequestHandler<CreatePropertyCommand, int>
 
         if (request.PhotoFile != null)
         {
-            var result = await _photoservice.AddPhotoAsync(request.PhotoFile);
+            var result = await _photoService.AddPhotoAsync(request.PhotoFile);
             
             mappedProperty.Photos = new List<Photo>()
             { new Photo(){Url= result.SecureUrl.AbsoluteUri, IsMain=true, PublicId= result.PublicId}};

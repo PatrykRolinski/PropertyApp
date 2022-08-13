@@ -24,10 +24,15 @@ public class SetMainPhotoHandler : IRequestHandler<SetMainPhotoCommand>
         }
         var currentMainPhoto = await _photoRepository.GetMainPhotoIdAsync(request.PropertyId);
 
-        var photo = await _photoRepository.GetPhotoByIdAsync(request.PropertyId, request.PhotoId);
+        var photo = await _photoRepository.GetPhotoForPropertyByIdAsync(request.PropertyId, request.PhotoId);
         if(photo == null)
         {
-            throw new NotFoundException($"Photo wiht {request.PhotoId} id for property with {request.PropertyId} id not found");
+            throw new NotFoundException($"Photo with {request.PhotoId} id for property with {request.PropertyId} id not found");
+        }
+
+        if (photo.Id == currentMainPhoto.Id)
+        {
+            throw new Exception("This is actually your main photo");
         }
 
        
