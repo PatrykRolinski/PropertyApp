@@ -46,4 +46,8 @@ public class BaseRepository<T, IdType> : IBaseRepository<T, IdType> where T : cl
         _context.Update(entity);
         await _context.SaveChangesAsync();
     }
+    public  IQueryable<T> GetAllQuery()
+    {
+        return  _context.Set<T>().AsQueryable();
+    }
 }

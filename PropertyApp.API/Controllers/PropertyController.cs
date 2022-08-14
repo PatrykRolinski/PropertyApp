@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PropertyApp.API.Extensions;
 using PropertyApp.Application.Functions.Properties.Commands.AddProperty;
 using PropertyApp.Application.Functions.Properties.Commands.DeleteProperty;
 using PropertyApp.Application.Functions.Properties.Commands.UpdateProperty;
@@ -21,10 +22,11 @@ public class PropertyController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<GetPropertiesListDto>>> GetAllProperties()
+    public async Task<ActionResult<List<GetPropertiesListDto>>> GetAllProperties([FromQuery] GetPropertiesListQuery query )
     {
-        var list = await _mediator.Send(new GetPropertiesListQuery());
-        return Ok(list);
+        var list = await _mediator.Send(query);
+        Response.AddPaginationHeader(query.PageNumber, query.PageSize, list.TotalCount, list.TotalPages, list.ItemsFrom, list.ItemsTo);
+        return Ok(list.Items);
     }
 
     [HttpGet("{id}")]

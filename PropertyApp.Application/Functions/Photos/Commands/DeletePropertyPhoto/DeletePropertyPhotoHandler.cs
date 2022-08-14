@@ -21,7 +21,7 @@ public class DeletePropertyPhotoHandler : IRequestHandler<DeletePropertyPhotoCom
 
       var photo=await  _photoRepository.GetPhotoForPropertyByIdAsync(request.PropertyId, request.PhotoId);
         
-        if (photo == null)
+        if (photo == null ||    photo.PublicId == null)
         {
             throw new NotFoundException($"Photo with {request.PhotoId} id for property with {request.PropertyId} id not found");
         }

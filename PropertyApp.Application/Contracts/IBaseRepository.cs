@@ -14,5 +14,7 @@ public interface IBaseRepository<T, IdType> where T : class
 
 
     public Task UpdateAsync(T entity);
+
+    public IQueryable<T> GetAllQuery();
    
 }
