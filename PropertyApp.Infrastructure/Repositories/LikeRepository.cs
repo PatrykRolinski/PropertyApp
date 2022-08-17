@@ -4,13 +4,10 @@ using PropertyApp.Domain.Entities;
 
 namespace PropertyApp.Infrastructure.Repositories;
 
-public class LikeRepository : ILikeRepository
+public class LikeRepository : BaseRepository<LikeProperty, int>, ILikeRepository
 {
-    private readonly PropertyAppContext _context;
-
-    public LikeRepository(PropertyAppContext appContext)
+    public LikeRepository(PropertyAppContext context) : base(context)
     {
-        _context = appContext;
     }
 
     public IQueryable<Property> GetLikedPropertiesiesByUserQuery(Guid userId)
@@ -28,4 +25,19 @@ public class LikeRepository : ILikeRepository
         return properties;
 
     }
+
+    public async Task<bool> IsAlreadyLikedAsync(Guid userId, int propertyId)
+    {
+     var likeExsist=  await _context.LikedProperties.AnyAsync(lp=> lp.UserId == userId && lp.PropertyId == propertyId);
+        return likeExsist;
+    }
+
+    public async Task<LikeProperty> GetByIdAsync(Guid userId, int propertyId)
+    {
+        // NOTE: Is Exceptions good Idea in repository?
+        var result = await _context.LikedProperties.FindAsync(userId, propertyId);
+        // if (result == null) throw new NotFoundException($"Item with {id} not found");
+        return result;
+    }
+
 }

@@ -8,7 +8,7 @@ public class LikeConfiguration : IEntityTypeConfiguration<LikeProperty>
 {
     public void Configure(EntityTypeBuilder<LikeProperty> builder)
     {
-        builder.HasKey(lp => lp.Id);
+        builder.HasKey(lp => new {lp.UserId, lp.PropertyId});
 
         builder.HasOne(lp => lp.User)
             .WithMany(u => u.LikedProperties)

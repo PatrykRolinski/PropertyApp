@@ -38,6 +38,11 @@ public class ExceptionHandlingMiddleware : IMiddleware
             context.Response.StatusCode = 500;
             await context.Response.WriteAsync(resetPasswordException.Message);
         }
+        catch(LikeException likeException)
+        {
+            context.Response.StatusCode = 500;
+            await context.Response.WriteAsync(likeException.Message);
+        }
         catch (FluentValidation.ValidationException ex)
         {
             context.Response.StatusCode = 500;
