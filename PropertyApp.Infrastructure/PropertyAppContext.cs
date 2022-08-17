@@ -14,6 +14,7 @@ public class PropertyAppContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<Role> Roles => Set<Role>();
     public DbSet<Photo> Photos => Set<Photo>();
+    public DbSet<LikeProperty> LikedProperties => Set<LikeProperty>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         new PropertyConfiguration().Configure(modelBuilder.Entity<Property>());
@@ -21,5 +22,6 @@ public class PropertyAppContext : DbContext
         new UserConfiguration().Configure(modelBuilder.Entity<User>());
         new RoleConfiguration().Configure(modelBuilder.Entity<Role>());
         new PhotoConfiguration().Configure(modelBuilder.Entity<Photo>());
+        new LikeConfiguration().Configure(modelBuilder.Entity<LikeProperty>());
     }
 }

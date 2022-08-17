@@ -7,6 +7,7 @@ using PropertyApp.Application.Functions.Properties.Queries.GetPropertyDetail;
 using PropertyApp.Application.Functions.Users.Queries.GetUsersList;
 using PropertyApp.Domain.Entities;
 using PropertyApp.Application.Functions.Photos.Queries;
+using PropertyApp.Application.Functions.Likes.Queries.GetLikedPropertiesList;
 
 namespace PropertyApp.Application.Mapper;
 
@@ -18,6 +19,12 @@ internal class MappingProfile : Profile
                 .ForMember(dest => dest.MainPhotoUrl, opt => opt.MapFrom(src =>src.Photos==null? null: src.Photos.FirstOrDefault(x => x.IsMain).Url))
                 .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.Address ==null? null : src.Address.City))
                 .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Address == null? null: src.Address.Country));
+
+
+        CreateMap<Property, GetLikedProperiesListDto>()
+                .ForMember(dest => dest.MainPhotoUrl, opt => opt.MapFrom(src => src.Photos == null ? null : src.Photos.FirstOrDefault(x => x.IsMain).Url))
+                .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.City))
+                .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.Country));
 
 
         CreateMap<CreatePropertyCommand, Property>()

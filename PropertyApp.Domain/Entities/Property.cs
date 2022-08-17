@@ -19,7 +19,8 @@ namespace PropertyApp.Domain.Entities;
     public virtual Address? Address { get; set; }
     public int AddressId { get; set; }
     public virtual ICollection<Photo>? Photos { get; set; }
+    public virtual ICollection<LikeProperty>? LikedProperties { get; set; }
 
 
-    }
+}
 

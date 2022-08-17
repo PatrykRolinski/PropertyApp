@@ -16,6 +16,7 @@ public class User : AuditableEntity
     public virtual Role? Role { get; set; }
     public int RoleId { get; set; }
     public virtual ICollection<Property>? CreatedProperties { get; set; }
+    public virtual ICollection<LikeProperty>? LikedProperties { get; set; }
 
 
 }

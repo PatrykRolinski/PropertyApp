@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PropertyApp.Application.Contracts;
+using PropertyApp.Application.Contracts.IServices;
 using PropertyApp.Infrastructure.Repositories;
 
 namespace PropertyApp.Infrastructure
@@ -18,6 +19,7 @@ namespace PropertyApp.Infrastructure
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPropertyRepository, PropertyRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
+            services.AddScoped<ILikeRepository, LikeRepository>();
             services.AddScoped<SeedData>();
             return services;
         }
