@@ -8,6 +8,7 @@ using PropertyApp.Application.Functions.Users.Queries.GetUsersList;
 using PropertyApp.Domain.Entities;
 using PropertyApp.Application.Functions.Photos.Queries;
 using PropertyApp.Application.Functions.Likes.Queries.GetLikedPropertiesList;
+using PropertyApp.Application.Models;
 
 namespace PropertyApp.Application.Mapper;
 
@@ -44,13 +45,16 @@ internal class MappingProfile : Profile
              .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.City))
               .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.Country))
              .ForMember(dest=> dest.Floor, opt=> opt.MapFrom(src => src.Address == null ? null : src.Address.Floor))
-             .ForMember(dest => dest.Street, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.Street));
+             .ForMember(dest => dest.Street, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.Street))
+             .ForMember(dest=> dest.CreatedById, opt=> opt.MapFrom(src=> src.CreatedById));
 
         CreateMap<Property, GetPropertiesListCreatedByUserDto>()
              .ForMember(dest => dest.MainPhotoUrl, opt => opt.MapFrom(src => src.Photos == null ? null : src.Photos.FirstOrDefault(x => x.IsMain).Url))
              .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.City))
              .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.Country))             
              .ForMember(dest => dest.Street, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.Street));
+
+        CreateMap<Message, MessageDto>();
 
 
         CreateMap<User, GetUsersListDto>()

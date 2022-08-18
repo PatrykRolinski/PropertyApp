@@ -17,6 +17,7 @@ public class GetPropertyDetailDto
     public string? City { get; set; }
     public string? Street { get; set; }
     public byte? Floor { get; set; }
+    public Guid CreatedById { get; set; }
     public string? MainPhotoUrl { get; set; }
     public ICollection<PhotoDto>? Photos { get; set; }
    

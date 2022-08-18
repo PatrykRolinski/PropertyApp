@@ -18,5 +18,8 @@ public class User : AuditableEntity
     public virtual ICollection<Property>? CreatedProperties { get; set; }
     public virtual ICollection<LikeProperty>? LikedProperties { get; set; }
 
+    public virtual ICollection<Message>? MessageRecived { get; set;}
+    public virtual ICollection<Message>? MessageSent { get; set; }
+
 
 }

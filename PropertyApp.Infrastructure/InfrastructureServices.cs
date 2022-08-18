@@ -20,6 +20,7 @@ namespace PropertyApp.Infrastructure
             services.AddScoped<IPropertyRepository, PropertyRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<ILikeRepository, LikeRepository>();
+            services.AddScoped<IMessageRepository, MesssageRepository>();
             services.AddScoped<SeedData>();
             return services;
         }

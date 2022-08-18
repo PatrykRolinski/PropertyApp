@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PropertyApp.Infrastructure;
 
@@ -11,9 +12,10 @@ using PropertyApp.Infrastructure;
 namespace PropertyApp.Infrastructure.Migrations
 {
     [DbContext(typeof(PropertyAppContext))]
-    partial class PropertyAppContextModelSnapshot : ModelSnapshot
+    [Migration("20220818173044_AddMessage")]
+    partial class AddMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +52,7 @@ namespace PropertyApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("PropertyApp.Domain.Entities.LikeProperty", b =>
@@ -65,7 +67,7 @@ namespace PropertyApp.Infrastructure.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("LikedProperties", (string)null);
+                    b.ToTable("LikedProperties");
                 });
 
             modelBuilder.Entity("PropertyApp.Domain.Entities.Message", b =>
@@ -108,7 +110,7 @@ namespace PropertyApp.Infrastructure.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("PropertyApp.Domain.Entities.Photo", b =>
@@ -136,7 +138,7 @@ namespace PropertyApp.Infrastructure.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("Photos", (string)null);
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("PropertyApp.Domain.Entities.Property", b =>
@@ -201,7 +203,7 @@ namespace PropertyApp.Infrastructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Properties", (string)null);
+                    b.ToTable("Properties");
                 });
 
             modelBuilder.Entity("PropertyApp.Domain.Entities.Role", b =>
@@ -219,7 +221,7 @@ namespace PropertyApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("PropertyApp.Domain.Entities.User", b =>
@@ -277,7 +279,7 @@ namespace PropertyApp.Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("PropertyApp.Domain.Entities.LikeProperty", b =>
