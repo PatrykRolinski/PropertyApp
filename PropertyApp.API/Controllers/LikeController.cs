@@ -41,7 +41,7 @@ public class LikeController : ControllerBase
         return NoContent();
     }
     [HttpGet("property/{propertyId}/like")]
-    public async Task<ActionResult<GetLikeDto>> GetLike([FromRoute] int propertyId)
+    public async Task<ActionResult<bool>> GetLike([FromRoute] int propertyId)
     {
       var like= await _mediator.Send(new GetLikeQuery() { PropertyId=propertyId });
        return like;

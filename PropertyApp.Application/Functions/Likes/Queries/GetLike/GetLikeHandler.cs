@@ -5,7 +5,7 @@ using PropertyApp.Domain.Entities;
 
 namespace PropertyApp.Application.Functions.Likes.Queries.GetLike;
 
-public class GetLikeHandler : IRequestHandler<GetLikeQuery, GetLikeDto>
+public class GetLikeHandler : IRequestHandler<GetLikeQuery, bool>
 {
     private readonly ILikeRepository _likeRepository;
     private readonly ICurrentUserService _currentUser;
@@ -16,7 +16,7 @@ public class GetLikeHandler : IRequestHandler<GetLikeQuery, GetLikeDto>
         _currentUser = currentUser;
     }
 
-    public async Task<GetLikeDto> Handle(GetLikeQuery request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(GetLikeQuery request, CancellationToken cancellationToken)
     {
         var userId = _currentUser.UserId;
 
@@ -30,9 +30,9 @@ public class GetLikeHandler : IRequestHandler<GetLikeQuery, GetLikeDto>
         
         if (like == null)
         {
-            throw new NotFoundException($"Like for property {request.PropertyId} id was not found");
+            return false;
         }
-        var likeDto= new GetLikeDto() { UserId = like.UserId, PropertyId= like.PropertyId };
-        return likeDto;
+
+        return true;
     }
 }
