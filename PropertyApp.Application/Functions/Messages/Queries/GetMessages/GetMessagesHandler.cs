@@ -6,7 +6,7 @@ using PropertyApp.Application.Models;
 
 namespace PropertyApp.Application.Functions.Messages.Queries.GetMessages
 {
-    public class GetMessagesHandler : IRequestHandler<GetMessagesQuery, List<MessageDto>>
+    public class GetMessagesHandler : IRequestHandler<GetMessagesQuery, PageResult<MessageDto>>
     {
         private readonly IMessageRepository _messageRepository;
         private readonly ICurrentUserService _currentUserService;
@@ -20,12 +20,15 @@ namespace PropertyApp.Application.Functions.Messages.Queries.GetMessages
             _mapper = mapper;
         }
 
-        public async Task<List<MessageDto>> Handle(GetMessagesQuery request, CancellationToken cancellationToken)
+        public async Task<PageResult<MessageDto>> Handle(GetMessagesQuery request, CancellationToken cancellationToken)
         {
             var userId = _currentUserService.UserId;
-         var messages= await _messageRepository.GetMessages(request.Container, Guid.Parse(userId));
-          var messagesDto=_mapper.Map<List<MessageDto>>(messages);
-            return messagesDto;
+         var messagePaginationDto= await _messageRepository.GetMessages(request.Container, Guid.Parse(userId), request.PageSize, request.PageNumber);
+          var messagesDto=_mapper.Map<List<MessageDto>>(messagePaginationDto.Messages);
+
+
+          var result = new PageResult<MessageDto>(messagesDto, request.PageNumber, messagePaginationDto.totalCount, request.PageSize);
+            return result;
         }
     }
 }

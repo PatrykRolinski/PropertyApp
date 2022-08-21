@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PropertyApp.API.Extensions;
 using PropertyApp.Application.Functions.Messages.Commands.AddMessage;
 using PropertyApp.Application.Functions.Messages.Queries.GetMessages;
 using PropertyApp.Application.Functions.Messages.Queries.GetMessageThread;
@@ -25,17 +26,18 @@ namespace PropertyApp.API.Controllers
           var messageId=await _mediator.Send(messageCommand);
           return Created($"api/user/message/{messageId}", null);
         }
-        [HttpGet("thread/{senderId}")]
-        public async Task<ActionResult<GetMessageThreadDto>> GetMessageThread([FromRoute] string senderId, [FromBody] int propertyId)
+        [HttpGet("thread")]
+        public async Task<ActionResult<GetMessageThreadDto>> GetMessageThread([FromQuery] string senderId, [FromQuery] int propertyId)
         {
-            var messageThread= await _mediator.Send(new GetMessageThreadQuery() { PropertyId=propertyId, SenderId=Guid.Parse(senderId)});
-             return Ok(messageThread);
+           var messageThread= await _mediator.Send(new GetMessageThreadQuery() { PropertyId=propertyId, SenderId=Guid.Parse(senderId)});
+           return Ok(messageThread);
         }
         [HttpGet]
         public async Task<ActionResult<List<MessageDto>>> GetMessages([FromQuery] GetMessagesQuery messageQuery) 
         {
-           var messages= await _mediator.Send(messageQuery);
-            return Ok(messages);
+           var list=await _mediator.Send(messageQuery);
+           Response.AddPaginationHeader(messageQuery.PageNumber, messageQuery.PageSize, list.TotalCount, list.TotalPages, list.ItemsFrom, list.ItemsTo);            
+           return Ok(list.Items);
         }
     }
 }

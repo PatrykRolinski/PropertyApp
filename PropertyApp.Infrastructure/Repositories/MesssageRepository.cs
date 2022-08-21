@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PropertyApp.Application.Contracts;
+using PropertyApp.Application.Models;
 using PropertyApp.Domain.Entities;
+using System.Linq;
 
 namespace PropertyApp.Infrastructure.Repositories;
 
@@ -20,22 +22,41 @@ public class MesssageRepository : IMessageRepository
     public async Task<List<Message>> GetMessageThread(Guid reciepientId, Guid senderId, int propertyId)
     {
       var messageThread= await _appContext.Messages.Where(m=> (m.RecipientId==reciepientId && m.SenderId==senderId 
-        && m.PropertyId==propertyId)|| (m.RecipientId==senderId && m.SenderId==reciepientId && m.PropertyId == propertyId)).ToListAsync();
+        && m.PropertyId==propertyId)|| (m.RecipientId==senderId && m.SenderId==reciepientId && m.PropertyId == propertyId))
+            .OrderByDescending(m=> m.SendDate).ToListAsync();
         return messageThread;
     }
-    public async Task <IReadOnlyList<Message>> GetMessages(string container, Guid currentUserId)
+    public async Task <MessagePagination> GetMessages(string container, Guid currentUserId, int PageSize, int PageNumber)
     {
 
         if (container == "Inbox")
         {
 
-          var messages=await  _appContext.Messages.Where(x => x.RecipientId == currentUserId).ToListAsync();
-            return messages;
+            var baseQuery =  _appContext.Messages.Where(x => x.RecipientId == currentUserId).AsQueryable();
+
+            var totalItems = baseQuery.Count();
+            baseQuery = baseQuery.OrderByDescending(x => x.SendDate);
+            var messages =await baseQuery
+                .Skip(PageSize * (PageNumber - 1))
+                .Take(PageSize)
+                .ToListAsync();
+
+            var result = new MessagePagination() { Messages = messages, totalCount = totalItems };
+            return result;
         }
         else
         {
-            var messages = await _appContext.Messages.Where(x => x.SenderId == currentUserId).ToListAsync();
-            return messages;
+
+            var baseQuery =  _appContext.Messages.Where(x => x.SenderId == currentUserId).AsQueryable();
+            var totalItems = baseQuery.Count();
+            baseQuery = baseQuery.OrderByDescending(x => x.SendDate);
+            var messages = await baseQuery
+                .Skip(PageSize * (PageNumber - 1))
+                .Take(PageSize)
+                .ToListAsync();
+
+            var result = new MessagePagination() { Messages = messages, totalCount = totalItems };
+            return result;
         }
        
     }
