@@ -2,6 +2,7 @@
 using MediatR;
 using PropertyApp.Application.Contracts;
 using PropertyApp.Application.Contracts.IServices;
+using PropertyApp.Application.Exceptions;
 using PropertyApp.Application.Models;
 
 namespace PropertyApp.Application.Functions.Messages.Queries.GetMessageThread
@@ -23,7 +24,12 @@ namespace PropertyApp.Application.Functions.Messages.Queries.GetMessageThread
         {
            
            var currentUserId = _currentUserService.UserId;
-           var messageThread= await _messageRepository.GetMessageThread(Guid.Parse(currentUserId), request.SenderId, request.PropertyId);
+
+            if (currentUserId == null)
+            {
+                throw new NotFoundException($"User with id {currentUserId} is not found");
+            }
+            var messageThread= await _messageRepository.GetMessageThread(Guid.Parse(currentUserId), request.SenderId, request.PropertyId);
 
             foreach(var message in messageThread)
             {

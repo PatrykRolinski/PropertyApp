@@ -9,7 +9,7 @@ using PropertyApp.Application.Models;
 
 namespace PropertyApp.API.Controllers
 {
-    [Route("api/user/message")]
+    [Route("api/User/message")]
     [ApiController]
     public class MessageController : ControllerBase
     {

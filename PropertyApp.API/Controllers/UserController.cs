@@ -1,7 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using PropertyApp.Application.Functions.Users.Commands.DeleteUser;
+using PropertyApp.Application.Functions.Users.Commands.UpdateUser;
 using PropertyApp.Application.Functions.Users.Queries.GetPropertiesListCreatedByUser;
 using PropertyApp.Application.Functions.Users.Queries.GetUsersList;
+using PropertyApp.Application.Models;
 
 namespace PropertyApp.API.Controllers
 {
@@ -22,6 +25,19 @@ namespace PropertyApp.API.Controllers
            return Ok(usersListDto);
 
     }
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateUser([FromRoute] Guid id, [FromBody]UpdateUser updateUser)
+    {  
+        await _mediator.Send(new UpdateUserCommand() {UserId=id, FirstName=updateUser.FirstName, LastName=updateUser.LastName });
+        return NoContent();
+    }
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteUser([FromRoute] Guid id)
+    {
+         await _mediator.Send(new DeleteUserCommand() { Id=id});
+         return NoContent();
+    }
+
     [HttpGet("created-properties")]
      public async Task<ActionResult<List<GetPropertiesListCreatedByUserDto>>> GetCreatedPropertiesByUser()
     {

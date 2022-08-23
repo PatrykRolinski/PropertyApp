@@ -9,8 +9,8 @@ using PropertyApp.Application.Functions.Likes.Queries.GetLikedPropertiesList;
 using PropertyApp.Domain.Entities;
 
 namespace PropertyApp.API.Controllers;
-//TODO: userid:?
-[Route("api/user")]
+
+[Route("api/User")]
 [ApiController]
 public class LikeController : ControllerBase
 {

@@ -8,7 +8,7 @@ using PropertyApp.Application.Functions.Photos.Queries;
 
 namespace PropertyApp.API.Controllers
 {
-    [Route("api/property/{propertyId}/photo")]
+    [Route("api/Property/{propertyId}/photo")]
     [ApiController]
     public class PhotoController : ControllerBase
     {
