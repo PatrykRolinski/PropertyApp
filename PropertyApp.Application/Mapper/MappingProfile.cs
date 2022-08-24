@@ -9,6 +9,7 @@ using PropertyApp.Domain.Entities;
 using PropertyApp.Application.Functions.Photos.Queries;
 using PropertyApp.Application.Functions.Likes.Queries.GetLikedPropertiesList;
 using PropertyApp.Application.Models;
+using PropertyApp.Application.Functions.Users.Queries.GetUser;
 
 namespace PropertyApp.Application.Mapper;
 
@@ -59,5 +60,8 @@ internal class MappingProfile : Profile
 
         CreateMap<User, GetUsersListDto>()
             .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.Name));
+
+        CreateMap<User, GetUserDto>()
+           .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.Name));
     }
 }
