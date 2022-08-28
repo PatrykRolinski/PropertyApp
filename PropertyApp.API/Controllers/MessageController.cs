@@ -10,6 +10,7 @@ using PropertyApp.Application.Models;
 namespace PropertyApp.API.Controllers
 {
     [Route("api/User/message")]
+    [Authorize]
     [ApiController]
     public class MessageController : ControllerBase
     {

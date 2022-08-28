@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PropertyApp.Application.Functions.Users.Commands.ChangeRole;
 using PropertyApp.Application.Functions.Users.Commands.DeleteUser;
@@ -12,6 +13,7 @@ using PropertyApp.Domain.Enums;
 namespace PropertyApp.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -22,6 +24,7 @@ namespace PropertyApp.API.Controllers
             _mediator = mediator;
         }
         [HttpGet]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult<List<GetUsersListDto>>> GetAllUsers()
         {
             var usersListDto = await _mediator.Send(new GetUsersListQuery());
@@ -48,6 +51,7 @@ namespace PropertyApp.API.Controllers
         }
 
         [HttpPut("{id}/role")]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult> ChangeRole([FromRoute]Guid id, [FromBody] RoleName roleName)
         {
             await _mediator.Send(new ChangeRoleCommand { UserId = id, Role = roleName });

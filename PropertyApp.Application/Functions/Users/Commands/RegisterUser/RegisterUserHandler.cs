@@ -17,13 +17,16 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand>
     private readonly IUserRepository _userRepository;
     private readonly IEmailService _emailService;
     private readonly IOptions<EmailSettings> _emailConfig;
+    private readonly IRoleRepository _roleRepository;
 
-    public RegisterUserHandler(IPasswordHasher<User> passwordHasher, IUserRepository userRepository, IEmailService emailService, IOptions<EmailSettings> emailConfig)
+    public RegisterUserHandler(IPasswordHasher<User> passwordHasher, IUserRepository userRepository, 
+        IEmailService emailService, IOptions<EmailSettings> emailConfig, IRoleRepository roleRepository)
     {
         _passwordHasher = passwordHasher;
         _userRepository = userRepository;
         _emailService = emailService;
         _emailConfig = emailConfig;
+        _roleRepository = roleRepository;
     }
     
     public async Task<Unit> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -35,8 +38,9 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand>
             FirstName = request.FirstName,
             LastName = request.LastName,
             Email = request.Email,
+            RoleId =await _roleRepository.GetRoleId("Member"),
             //MemberId is default
-            RoleId = 2,
+            
             CreatedDate = DateTime.UtcNow,
             VerificationToken=CreateVerificationToken()
         };

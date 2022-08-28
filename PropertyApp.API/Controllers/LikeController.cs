@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PropertyApp.API.Extensions;
@@ -11,6 +12,7 @@ using PropertyApp.Domain.Entities;
 namespace PropertyApp.API.Controllers;
 
 [Route("api/User")]
+[Authorize]
 [ApiController]
 public class LikeController : ControllerBase
 {

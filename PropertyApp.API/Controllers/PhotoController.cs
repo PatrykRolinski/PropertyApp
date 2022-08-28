@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PropertyApp.Application.Functions.Photos.Commands.AddPhoto;
@@ -9,6 +10,7 @@ using PropertyApp.Application.Functions.Photos.Queries;
 namespace PropertyApp.API.Controllers
 {
     [Route("api/Property/{propertyId}/photo")]
+    [Authorize]
     [ApiController]
     public class PhotoController : ControllerBase
     {

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using PropertyApp.Application.Authorization;
 using PropertyApp.Application.Contracts;
 using PropertyApp.Application.Contracts.IServices;
 using PropertyApp.Application.Exceptions;
@@ -14,13 +16,16 @@ public class CreatePropertyHandler : IRequestHandler<CreatePropertyCommand, int>
     private readonly IMapper _mapper;
     private readonly IPhotoService _photoService;
     private readonly ICurrentUserService _currentUser;
+    private readonly IAuthorizationService _authorizationService;
 
-    public CreatePropertyHandler(IPropertyRepository propertyRepository,IMapper mapper, IPhotoService photoService, ICurrentUserService currentUser)
+    public CreatePropertyHandler(IPropertyRepository propertyRepository,IMapper mapper, IPhotoService photoService,
+        ICurrentUserService currentUser, IAuthorizationService authorizationService)
     {
         _propertyRepository = propertyRepository;
         _mapper = mapper;
         _photoService = photoService;
         _currentUser = currentUser;
+        _authorizationService = authorizationService;
     }
 
     public async Task<int> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
@@ -32,6 +37,13 @@ public class CreatePropertyHandler : IRequestHandler<CreatePropertyCommand, int>
        
 
        var mappedProperty= _mapper.Map<Property>(request);
+
+        var authorizationResult = await _authorizationService.AuthorizeAsync(_currentUser.User, mappedProperty, new ResourceOperationRequirement(ResourceOperation.Create));
+        if (!authorizationResult.Succeeded)
+        {
+            throw new ForbiddenException($"You do not have access to create property");
+        }
+
 
         if (request.PhotoFile != null)
         {
@@ -46,6 +58,9 @@ public class CreatePropertyHandler : IRequestHandler<CreatePropertyCommand, int>
         {
             throw new NotFoundException($"User with id {userId} is not found");
         }
+
+
+      
 
         mappedProperty.CreatedById = Guid.Parse(userId);
         mappedProperty.CreatedDate = DateTime.UtcNow;

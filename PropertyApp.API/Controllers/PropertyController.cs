@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PropertyApp.API.Extensions;
@@ -11,6 +12,7 @@ using PropertyApp.Application.Functions.Properties.Queries.GetPropertyDetail;
 namespace PropertyApp.API.Controllers;
 
 [Route("api/[controller]")]
+[Authorize]
 [ApiController]
 public class PropertyController : ControllerBase
 {
@@ -20,7 +22,7 @@ public class PropertyController : ControllerBase
     {
         _mediator = mediator;
     }
-
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<List<GetPropertiesListDto>>> GetAllProperties([FromQuery] GetPropertiesListQuery query )
     {
@@ -28,7 +30,7 @@ public class PropertyController : ControllerBase
         Response.AddPaginationHeader(query.PageNumber, query.PageSize, list.TotalCount, list.TotalPages, list.ItemsFrom, list.ItemsTo);
         return Ok(list.Items);
     }
-
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public async Task<ActionResult<GetPropertyDetailDto>> GetProperty([FromRoute]int id)
     {

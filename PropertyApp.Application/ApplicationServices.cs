@@ -1,8 +1,11 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PropertyApp.Application.Authorization;
 using PropertyApp.Application.Contracts.IServices;
 using PropertyApp.Application.Services.CurrentUserService;
 using PropertyApp.Application.Services.EmailService;
@@ -26,6 +29,8 @@ public static class ApplicationServices
         services.AddScoped<IPhotoService, PhotoService>();
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddScoped<IAuthorizationHandler, PropertyOperationRequirementHandler>();
+        services.AddHttpContextAccessor();
         
         return services;
     }

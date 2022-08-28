@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PropertyApp.Application.Functions.Users.Commands.ForgotPassword;
@@ -10,6 +11,7 @@ using PropertyApp.Application.Functions.Users.Commands.VerifyUser;
 namespace PropertyApp.API.Controllers
 {
     [Route("api/[controller]")]
+    [AllowAnonymous]
     [ApiController]
     public class AccountController : ControllerBase
     {
