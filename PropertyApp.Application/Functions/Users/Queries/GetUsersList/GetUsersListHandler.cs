@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using PropertyApp.Application.Contracts;
+using PropertyApp.Application.Models;
 
 namespace PropertyApp.Application.Functions.Users.Queries.GetUsersList;
 
-public class GetUsersListHandler : IRequestHandler<GetUsersListQuery, List<GetUsersListDto>>
+public class GetUsersListHandler : IRequestHandler<GetUsersListQuery, PageResult<GetUsersListDto>>
 {
     private readonly IUserRepository _userRespository;
     private readonly IMapper _mapper;
@@ -15,10 +17,21 @@ public class GetUsersListHandler : IRequestHandler<GetUsersListQuery, List<GetUs
         _mapper = mapper;
     }
 
-    public async Task<List<GetUsersListDto>> Handle(GetUsersListQuery request, CancellationToken cancellationToken)
+    public async Task<PageResult<GetUsersListDto>> Handle(GetUsersListQuery request, CancellationToken cancellationToken)
     {
-      var users=await _userRespository.GetAllAsync();
-      var usersDto=_mapper.Map<List<GetUsersListDto>>(users);
-       return usersDto;
+
+        var validator = new GetUsersListValidator();
+        await validator.ValidateAndThrowAsync(request, cancellationToken);
+
+        var users=await _userRespository.GetAllAsync(request.SearchPhrase, request.PageSize, request.PageNumber);
+        var usersDto=_mapper.Map<List<GetUsersListDto>>(users.Users);
+
+
+        var result = new PageResult<GetUsersListDto>(usersDto, request.PageNumber, users.totalCount, request.PageSize);
+
+        return result;
+
+
+
     }
 }

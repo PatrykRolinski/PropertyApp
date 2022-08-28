@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PropertyApp.API.Extensions;
 using PropertyApp.Application.Functions.Users.Commands.ChangeRole;
 using PropertyApp.Application.Functions.Users.Commands.DeleteUser;
 using PropertyApp.Application.Functions.Users.Commands.UpdateUser;
@@ -25,10 +26,11 @@ namespace PropertyApp.API.Controllers
         }
         [HttpGet]
         [Authorize(Roles ="Admin")]
-        public async Task<ActionResult<List<GetUsersListDto>>> GetAllUsers()
+        public async Task<ActionResult<List<GetUsersListDto>>> GetAllUsers([FromQuery] GetUsersListQuery query)
         {
-            var usersListDto = await _mediator.Send(new GetUsersListQuery());
-            return Ok(usersListDto);
+            var list = await _mediator.Send(query);
+            Response.AddPaginationHeader(query.PageNumber, query.PageSize, list.TotalCount, list.TotalPages, list.ItemsFrom, list.ItemsTo);
+            return Ok(list.Items);
 
         }
         [HttpGet("{id}")]

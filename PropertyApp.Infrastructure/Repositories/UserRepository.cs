@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PropertyApp.Application.Contracts;
+using PropertyApp.Application.Models;
 using PropertyApp.Domain.Entities;
 using PropertyApp.Domain.Enums;
 
@@ -34,5 +35,15 @@ public class UserRepository : BaseRepository<User, Guid>, IUserRepository
         user.RoleId = role.Id;
        await _context.SaveChangesAsync();
         return true;
+    }
+   public async Task<UserPagination> GetAllAsync(string searchPhrase, int PageSize, int PageNumber)
+    {
+        var baseQuery = _context.Users.Where(u => searchPhrase == null || (u.Email.ToLower().Contains(searchPhrase.ToLower())));
+
+        var totalItemsCount = baseQuery.Count();
+        var users=await baseQuery.Skip(PageSize *(PageNumber-1)).Take(PageSize).ToListAsync();
+
+        var result = new UserPagination() { Users = users, totalCount = totalItemsCount };
+        return result;
     }
 }
