@@ -36,14 +36,14 @@ public class UserRepository : BaseRepository<User, Guid>, IUserRepository
        await _context.SaveChangesAsync();
         return true;
     }
-   public async Task<UserPagination> GetAllAsync(string searchPhrase, int PageSize, int PageNumber)
+   public async Task<PaginationHelper<User>> GetAllAsync(string searchPhrase, int PageSize, int PageNumber)
     {
         var baseQuery = _context.Users.Where(u => searchPhrase == null || (u.Email.ToLower().Contains(searchPhrase.ToLower())));
 
         var totalItemsCount = baseQuery.Count();
         var users=await baseQuery.Skip(PageSize *(PageNumber-1)).Take(PageSize).ToListAsync();
 
-        var result = new UserPagination() { Users = users, totalCount = totalItemsCount };
+        var result = new PaginationHelper<User>() {Items= users, totalCount = totalItemsCount };
         return result;
     }
 }

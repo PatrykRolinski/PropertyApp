@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PropertyApp.Application.Functions.Users.Commands.ChangePassword;
 using PropertyApp.Application.Functions.Users.Commands.ForgotPassword;
 using PropertyApp.Application.Functions.Users.Commands.LoginUser;
 using PropertyApp.Application.Functions.Users.Commands.RegisterUser;
@@ -44,14 +45,20 @@ namespace PropertyApp.API.Controllers
         public async Task<ActionResult> ForgotPassword([FromBody] string email)
         {
             await _mediator.Send(new ForgotPasswordCommand(){Email=email});
-            return Ok("Now you can change the password");
+            return Ok("");
         }
         [HttpPost("reset-password")]
         public async Task<ActionResult> ResetPassword([FromQuery]string token, [FromBody] ResetPasswordDto resetPasswordDto)
         {
             await _mediator.Send(new ResetPasswordCommand {Token=token, Email=resetPasswordDto.Email, 
                 Password=resetPasswordDto.Password, ConfirmPassword=resetPasswordDto.ConfirmPassword });
-            return Ok("Your password has been changed");
+            return Ok("");
+        }
+        [HttpPut("change-password")]
+        public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordCommand passwordCommand)
+        {
+            await _mediator.Send(passwordCommand);
+            return NoContent();
         }
     }
 }

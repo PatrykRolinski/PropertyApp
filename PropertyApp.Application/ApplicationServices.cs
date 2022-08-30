@@ -30,6 +30,7 @@ public static class ApplicationServices
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<IAuthorizationHandler, PropertyOperationRequirementHandler>();
+        services.AddScoped<IAuthorizationHandler, UserOperationRequirementHandler>();
         services.AddHttpContextAccessor();
         
         return services;

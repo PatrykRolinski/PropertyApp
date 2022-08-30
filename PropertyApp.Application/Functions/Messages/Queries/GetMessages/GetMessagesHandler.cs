@@ -23,11 +23,9 @@ namespace PropertyApp.Application.Functions.Messages.Queries.GetMessages
         public async Task<PageResult<MessageDto>> Handle(GetMessagesQuery request, CancellationToken cancellationToken)
         {
             var userId = _currentUserService.UserId;
-         var messagePaginationDto= await _messageRepository.GetMessages(request.Container, Guid.Parse(userId), request.PageSize, request.PageNumber);
-          var messagesDto=_mapper.Map<List<MessageDto>>(messagePaginationDto.Messages);
-
-
-          var result = new PageResult<MessageDto>(messagesDto, request.PageNumber, messagePaginationDto.totalCount, request.PageSize);
+         var paginationHelper= await _messageRepository.GetMessages(request.Container, Guid.Parse(userId), request.PageSize, request.PageNumber);
+          var messagesDto=_mapper.Map<List<MessageDto>>(paginationHelper.Items);
+          var result = new PageResult<MessageDto>(messagesDto, request.PageNumber, paginationHelper.totalCount, request.PageSize);
             return result;
         }
     }

@@ -32,7 +32,7 @@ public class GetUserHandler : IRequestHandler<GetUserQuery, GetUserDto>
             throw new NotFoundException($"User with {request.Id} id not found");
         }
 
-        var authorizationResult = await _authorizationService.AuthorizeAsync(_currentUser.User, user, new ResourceOperationRequirement(ResourceOperation.Read));
+        var authorizationResult =await  _authorizationService.AuthorizeAsync(_currentUser.User, user, new ResourceOperationRequirement(ResourceOperation.Read));
         if (!authorizationResult.Succeeded)
         {
             throw new ForbiddenException($"You do not have access to read user with id {request.Id}");

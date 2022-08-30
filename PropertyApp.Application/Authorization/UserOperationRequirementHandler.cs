@@ -12,8 +12,8 @@ public class UserOperationRequirementHandler : AuthorizationHandler<ResourceOper
         var userId = context.User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value;
         var role = context.User.FindFirst(c => c.Type == ClaimTypes.Role).Value;
 
-        if ((requirement.ResourceOperation==ResourceOperation.Read || requirement.ResourceOperation == ResourceOperation.Delete || requirement.ResourceOperation == ResourceOperation.Update)
-           && user.Id == Guid.Parse(userId) || role == RoleName.Admin.ToString())
+        if ((requirement.ResourceOperation == ResourceOperation.Read || requirement.ResourceOperation == ResourceOperation.Delete || requirement.ResourceOperation == ResourceOperation.Update)
+           && (user.Id == Guid.Parse(userId) || role == RoleName.Admin.ToString())) 
         {
             context.Succeed(requirement);
         }

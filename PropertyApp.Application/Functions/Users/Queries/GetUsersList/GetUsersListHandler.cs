@@ -23,11 +23,11 @@ public class GetUsersListHandler : IRequestHandler<GetUsersListQuery, PageResult
         var validator = new GetUsersListValidator();
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var users=await _userRespository.GetAllAsync(request.SearchPhrase, request.PageSize, request.PageNumber);
-        var usersDto=_mapper.Map<List<GetUsersListDto>>(users.Users);
+        var paginationHelper=await _userRespository.GetAllAsync(request.SearchPhrase, request.PageSize, request.PageNumber);
+        var usersDto=_mapper.Map<List<GetUsersListDto>>(paginationHelper.Items);
 
 
-        var result = new PageResult<GetUsersListDto>(usersDto, request.PageNumber, users.totalCount, request.PageSize);
+        var result = new PageResult<GetUsersListDto>(usersDto, request.PageNumber, paginationHelper.totalCount, request.PageSize);
 
         return result;
 

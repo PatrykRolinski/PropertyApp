@@ -26,7 +26,7 @@ public class MesssageRepository : IMessageRepository
             .OrderByDescending(m=> m.SendDate).ToListAsync();
         return messageThread;
     }
-    public async Task <MessagePagination> GetMessages(string container, Guid currentUserId, int PageSize, int PageNumber)
+    public async Task <PaginationHelper<Message>> GetMessages(string container, Guid currentUserId, int PageSize, int PageNumber)
     {
 
         if (container == "Inbox")
@@ -41,7 +41,7 @@ public class MesssageRepository : IMessageRepository
                 .Take(PageSize)
                 .ToListAsync();
 
-            var result = new MessagePagination() { Messages = messages, totalCount = totalItems };
+            var result = new PaginationHelper<Message> { Items = messages, totalCount = totalItems };
             return result;
         }
         else
@@ -55,7 +55,7 @@ public class MesssageRepository : IMessageRepository
                 .Take(PageSize)
                 .ToListAsync();
 
-            var result = new MessagePagination() { Messages = messages, totalCount = totalItems };
+            var result = new PaginationHelper<Message> { Items = messages, totalCount = totalItems };
             return result;
         }
        
