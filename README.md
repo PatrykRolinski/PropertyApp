@@ -17,6 +17,7 @@ Several user roles have been implemented:
 ## Used Technologies
 - .NET 6
 - ASP.NET Core Web API
+- MS SQL Database
 - Entity Framework Core 6.0.7
 - NLog 5.0.1
 - AutoMapper 11.0.0
