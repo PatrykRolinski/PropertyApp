@@ -1,6 +1,10 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using PropertyApp.Infrastructure;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
@@ -12,7 +16,20 @@ namespace PropertyApp.Api.IntegrationTests
         private HttpClient _client;
         public PropertyControllerTests(WebApplicationFactory<Program> factory)
         {
-            _client = factory.CreateClient();
+            _client = factory
+                .WithWebHostBuilder(builder =>
+                {
+                builder.ConfigureServices(services =>
+                {
+                    var dbContextOptions = services.SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<PropertyAppContext>));
+                    services.Remove(dbContextOptions);
+
+                    services.AddDbContext<PropertyAppContext>(options => options.UseInMemoryDatabase("PropertyDataBase"));
+
+                });
+                   
+                })
+                .CreateClient();
         }
 
         public static IEnumerable<object[]> GetValidQueryParameters()
