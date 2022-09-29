@@ -16,7 +16,5 @@
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 	<ProjectReference Include="..\PropertyApp.Infrastructure\PropertyApp.Infrastructure.csproj" />
-	  
   </ItemGroup>
-
 </Project>

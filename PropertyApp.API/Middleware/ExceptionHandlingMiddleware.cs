@@ -45,7 +45,12 @@ public class ExceptionHandlingMiddleware : IMiddleware
         }
         catch (FluentValidation.ValidationException ex)
         {
-            context.Response.StatusCode = 500;
+            context.Response.StatusCode = 400;
+            await context.Response.WriteAsync(ex.Message);
+        }
+        catch(KeyNotFoundException ex)
+        {
+            context.Response.StatusCode = 400;
             await context.Response.WriteAsync(ex.Message);
         }
         catch (Exception ex)

@@ -6,8 +6,11 @@ using PropertyApp.API.Middleware;
 using PropertyApp.Application;
 using PropertyApp.Domain.Common;
 using PropertyApp.Infrastructure;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Serialization;
+
+//[assembly: InternalsVisibleTo("PropertyApp.Api.IntegrationTests")]
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -101,3 +104,4 @@ finally
     // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
     NLog.LogManager.Shutdown();
 }
+public partial class Program { }

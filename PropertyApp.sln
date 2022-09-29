@@ -13,22 +13,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{B9BC6E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{319CCE31-1F4E-48D6-B645-CEFBCD7067AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyApp.Application", "PropertyApp.Application\PropertyApp.Application.csproj", "{8A4C98D7-2F9D-4584-AECD-0D77F297C3A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyApp.Application", "PropertyApp.Application\PropertyApp.Application.csproj", "{8A4C98D7-2F9D-4584-AECD-0D77F297C3A3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CC22BC6F-C103-4300-BD99-5AD966615B3A} = {CC22BC6F-C103-4300-BD99-5AD966615B3A}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyApp.Domain", "PropertyApp.Domain\PropertyApp.Domain.csproj", "{CC22BC6F-C103-4300-BD99-5AD966615B3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyApp.Domain", "PropertyApp.Domain\PropertyApp.Domain.csproj", "{CC22BC6F-C103-4300-BD99-5AD966615B3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyApp.Infrastructure", "PropertyApp.Infrastructure\PropertyApp.Infrastructure.csproj", "{CD89933F-707E-40C1-8012-9D746FF2075B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyApp.Infrastructure", "PropertyApp.Infrastructure\PropertyApp.Infrastructure.csproj", "{CD89933F-707E-40C1-8012-9D746FF2075B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8A4C98D7-2F9D-4584-AECD-0D77F297C3A3} = {8A4C98D7-2F9D-4584-AECD-0D77F297C3A3}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyApp.API", "PropertyApp.API\PropertyApp.API.csproj", "{9F4D7C02-A73E-4610-B0D9-B220E85AD0F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyApp.API", "PropertyApp.API\PropertyApp.API.csproj", "{9F4D7C02-A73E-4610-B0D9-B220E85AD0F2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CD89933F-707E-40C1-8012-9D746FF2075B} = {CD89933F-707E-40C1-8012-9D746FF2075B}
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D60D1B84-FB6E-458B-A523-802547F99C32}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertyApp.Api.IntegrationTests", "PropertyApp.Api.IntegrationTests", "{CB3733B6-D372-4E66-9C6F-AB78DA566AEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyApp.Api.IntegrationTests", "PropertyApp.Api.IntegrationTests\PropertyApp.Api.IntegrationTests.csproj", "{5DE8F184-3A5A-4BA8-A473-99C5D7BE99D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +58,10 @@ Global
 		{9F4D7C02-A73E-4610-B0D9-B220E85AD0F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F4D7C02-A73E-4610-B0D9-B220E85AD0F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F4D7C02-A73E-4610-B0D9-B220E85AD0F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DE8F184-3A5A-4BA8-A473-99C5D7BE99D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DE8F184-3A5A-4BA8-A473-99C5D7BE99D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DE8F184-3A5A-4BA8-A473-99C5D7BE99D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DE8F184-3A5A-4BA8-A473-99C5D7BE99D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +75,8 @@ Global
 		{CC22BC6F-C103-4300-BD99-5AD966615B3A} = {B9BC6EC8-960D-4DCB-9DBF-A1FC308CB56C}
 		{CD89933F-707E-40C1-8012-9D746FF2075B} = {319CCE31-1F4E-48D6-B645-CEFBCD7067AD}
 		{9F4D7C02-A73E-4610-B0D9-B220E85AD0F2} = {37517BF3-158F-4C81-B139-175D6A5EE0C9}
+		{CB3733B6-D372-4E66-9C6F-AB78DA566AEE} = {D60D1B84-FB6E-458B-A523-802547F99C32}
+		{5DE8F184-3A5A-4BA8-A473-99C5D7BE99D7} = {CB3733B6-D372-4E66-9C6F-AB78DA566AEE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C5AA46AB-ED2D-4E79-83E6-00F74EEF8956}

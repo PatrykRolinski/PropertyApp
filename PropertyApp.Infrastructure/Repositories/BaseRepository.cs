@@ -34,9 +34,8 @@ public class BaseRepository<T, IdType> : IBaseRepository<T, IdType> where T : cl
 
     public async Task<T> GetByIdAsync(IdType id)
     {
-        // NOTE: Is Exceptions good Idea in repository?
+        
         var result= await _context.Set<T>().FindAsync(id);
-       // if (result == null) throw new NotFoundException($"Item with {id} not found");
         return result;
     }
 

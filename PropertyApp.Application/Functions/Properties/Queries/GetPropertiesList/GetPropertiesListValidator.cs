@@ -16,6 +16,14 @@ public class GetPropertiesListValidator : AbstractValidator<GetPropertiesListQue
                  context.AddFailure($"PageSize", $"PageSize must be in [{string.Join(",", allowedPageSize)}] ");
              }
          });
-       
+        RuleFor(p => p.MinimumPrice).Must(x=> x >= 0);
+
+        RuleFor(p => p.MaximumPrice).Must(x=> x>=0);
+
+        RuleFor(p => p.MinimumSize).Must(x=> x >= 0);
+
+        RuleFor(p => p.MaximumSize).Must(x=> x >= 0);
+
+
     }
 }
