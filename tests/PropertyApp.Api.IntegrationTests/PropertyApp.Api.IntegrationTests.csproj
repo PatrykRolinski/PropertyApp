@@ -24,7 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PropertyApp.API\PropertyApp.API.csproj" />
+    <ProjectReference Include="..\..\PropertyApp.API\PropertyApp.API.csproj" />
   </ItemGroup>
+
+
 
 </Project>
