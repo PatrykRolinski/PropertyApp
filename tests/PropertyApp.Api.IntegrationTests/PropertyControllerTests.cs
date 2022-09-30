@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using PropertyApp.Api.IntegrationTests.Helpers;
 using PropertyApp.Application.Functions.Properties.Commands.AddProperty;
 using PropertyApp.Domain.Entities;
 using PropertyApp.Infrastructure;
@@ -101,7 +102,7 @@ namespace PropertyApp.Api.IntegrationTests
         }
 
         [Fact]
-        public async Task CreateProperty_WithValidModel_ReturnsCreatedResult()
+        public async Task AddProperty_WithValidModel_ReturnsCreatedResult()
         {
             //arrange
             var model = new CreatePropertyCommand()
@@ -114,15 +115,7 @@ namespace PropertyApp.Api.IntegrationTests
                 ClosedKitchen = false,
             };
 
-            var formContent = new MultipartFormDataContent
-            {
-                {new StringContent(model.Description), "Description" },
-                {new StringContent(model.Price.ToString()), "Price" },
-                {new StringContent(model.Country), "Country" },
-                {new StringContent(model.City), "City" },
-                {new StringContent(model.Street), "Street" },
-                {new StringContent(model.ClosedKitchen.ToString()), "ClosedKitchen" }
-            };
+            var formContent = model.ToMultipartFormDataContent();
 
             //act
 
@@ -134,5 +127,27 @@ namespace PropertyApp.Api.IntegrationTests
             response.Headers.Location.Should().NotBeNull();
 
         }
+        [Fact]
+        public async Task AddProperty_WithInvalidModel_ReturnsBadRequestResult()
+        {
+            var model = new CreatePropertyCommand()
+            {
+                PropertySize = 30
+            };
+
+            var formContent = model.ToMultipartFormDataContent();
+
+            //act
+
+            var response = await _client.PostAsync("api/property", formContent);
+
+            //assert
+
+            response.Should().HaveStatusCode(System.Net.HttpStatusCode.BadRequest);
+            response.Headers.Location.Should().BeNull();
+
+        }
+
+
     }
 }
