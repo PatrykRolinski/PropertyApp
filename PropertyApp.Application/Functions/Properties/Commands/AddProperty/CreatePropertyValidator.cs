@@ -28,7 +28,7 @@ public class CreatePropertyValidator : AbstractValidator<CreatePropertyCommand>
         RuleFor(p=> p.ClosedKitchen)
             .Must(x => x == false || x == true);
 
-        // TODO: FIX Enum Validation
+        
         RuleFor(p => p.MarketType)
             .IsInEnum();
 
