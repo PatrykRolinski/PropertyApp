@@ -1,43 +1,45 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using PropertyApp.Api.IntegrationTests.Helpers;
 using PropertyApp.Application.Functions.Properties.Commands.AddProperty;
 using PropertyApp.Domain.Entities;
 using PropertyApp.Infrastructure;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace PropertyApp.Api.IntegrationTests
 {
-    public class PropertyControllerTests: IClassFixture<WebApplicationFactory<Program>>
+    public class PropertyControllerTests: IClassFixture<CustomWebApplicationFactory<Program>>
     {
         private HttpClient _client;
-        public PropertyControllerTests(WebApplicationFactory<Program> factory)
+        private WebApplicationFactory<Program> _factory;
+        private readonly ITestOutputHelper _outputHelper;
+
+        public PropertyControllerTests(CustomWebApplicationFactory<Program> factory)
         {
-            _client = factory
-                .WithWebHostBuilder(builder =>
-                {
-                builder.ConfigureServices(services =>
-                {
-                    var dbContextOptions = services.SingleOrDefault(service => service.ServiceType == typeof(DbContextOptions<PropertyAppContext>));
-                    services.Remove(dbContextOptions);
-                    services.AddDbContext<PropertyAppContext>(options => options.UseInMemoryDatabase("PropertyDataBase"));
-                    services.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
-                    services.AddMvc(option => option.Filters.Add(new FakeUserFilter()));
-                });
-                   
-                })
-                .CreateClient();
+            _factory = factory;
+            _client = _factory.CreateClient();
         }
 
+        private void SeedRestaurant(Property property)
+        {
+            var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
+            using var scope = scopeFactory.CreateScope();
+            var dbContext = scope.ServiceProvider.GetService<PropertyAppContext>();
+            dbContext.Add(property);
+            dbContext.SaveChanges();
+        }
+
+        //Tests for GetAllProperties
+        #region
         public static IEnumerable<object[]> GetValidQueryParameters()
         {
             yield return new object[] { "PageNumber=1&PageSize=5" };
@@ -100,7 +102,10 @@ namespace PropertyApp.Api.IntegrationTests
             //assert
             result.Should().HaveStatusCode(System.Net.HttpStatusCode.BadRequest);
         }
+        #endregion// //Test
 
+        //Tests for AddProperty
+        #region
         [Fact]
         public async Task AddProperty_WithValidModel_ReturnsCreatedResult()
         {
@@ -147,7 +152,62 @@ namespace PropertyApp.Api.IntegrationTests
             response.Headers.Location.Should().BeNull();
 
         }
+        #endregion
 
+        //Tests for DeleteProperty
+        #region
+        [Fact]
+        public async Task DeleteProperty_ValidCommand_ReturnsNoContent()
+        {
+            //arrange
+            var property = new Property()
+            {
+                CreatedById = Guid.Parse("53bfba37-1b94-41e3-abfa-bbc7c8cc5ae9"),
+                Description = "Test"
+            };
+
+            SeedRestaurant(property);
+            
+            //act
+            var response = await _client.DeleteAsync("api/property/" + property.Id);
+
+            //assert
+
+            response.Should().HaveStatusCode(System.Net.HttpStatusCode.NoContent);
+        }
+
+        [Fact]
+        public async Task DeleteProperty_ForNonPropertyCreator_ReturnsForbidden()
+        {
+            //arrange
+            var property = new Property()
+            {
+                CreatedById = Guid.Parse("33bfba37-1b94-41e3-abfa-bbc7c8cc5ae9"),
+                Description = "Test"
+            };
+
+            SeedRestaurant(property);
+
+            //act
+            var response = await _client.DeleteAsync("api/property/" + property.Id);
+
+            //assert
+
+            response.Should().HaveStatusCode(System.Net.HttpStatusCode.Forbidden);
+        }
+
+        [Fact]
+        public async Task DeleteProperty_ForNonExsistProperty_ReturnsNotFound()
+        {
+            //act
+            var response = await _client.DeleteAsync("api/property/" + "150000");
+
+            //assert
+
+            response.Should().HaveStatusCode(System.Net.HttpStatusCode.NotFound);
+        }
+
+        #endregion
 
     }
 }

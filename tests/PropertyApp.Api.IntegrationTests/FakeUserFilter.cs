@@ -12,7 +12,7 @@ namespace PropertyApp.Api.IntegrationTests
                 new[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, "53bfba37-1b94-41e3-abfa-bbc7c8cc5ae9"),
-                    new Claim(ClaimTypes.Role, "Admin")
+                    new Claim(ClaimTypes.Role, "Manager")
                 }));
 
             context.HttpContext.User = claimsPrinicpal;
