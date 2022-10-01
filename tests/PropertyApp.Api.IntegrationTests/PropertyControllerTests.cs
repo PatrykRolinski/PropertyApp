@@ -20,8 +20,8 @@ namespace PropertyApp.Api.IntegrationTests
     public class PropertyControllerTests: IClassFixture<CustomWebApplicationFactory<Program>>
     {
         private HttpClient _client;
-        private WebApplicationFactory<Program> _factory;
-        private readonly ITestOutputHelper _outputHelper;
+        private CustomWebApplicationFactory<Program> _factory;
+        
 
         public PropertyControllerTests(CustomWebApplicationFactory<Program> factory)
         {
