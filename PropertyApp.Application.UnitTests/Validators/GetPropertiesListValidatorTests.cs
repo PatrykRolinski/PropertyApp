@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace PropertyApp.Api.IntegrationTests.Validators
+namespace PropertyApp.Application.UnitTests.Validators
 {
     public class GetPropertiesListValidatorTests
     {

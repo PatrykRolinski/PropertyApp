@@ -33,9 +33,6 @@ public class CreatePropertyHandler : IRequestHandler<CreatePropertyCommand, int>
         var validator= new CreatePropertyValidator();
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-
-       
-
        var mappedProperty= _mapper.Map<Property>(request);
 
         var authorizationResult = await _authorizationService.AuthorizeAsync(_currentUser.User, mappedProperty, new ResourceOperationRequirement(ResourceOperation.Create));
@@ -58,9 +55,6 @@ public class CreatePropertyHandler : IRequestHandler<CreatePropertyCommand, int>
         {
             throw new NotFoundException($"User with id {userId} is not found");
         }
-
-
-      
 
         mappedProperty.CreatedById = Guid.Parse(userId);
         mappedProperty.CreatedDate = DateTime.UtcNow;

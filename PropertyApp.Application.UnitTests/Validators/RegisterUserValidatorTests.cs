@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace PropertyApp.Api.IntegrationTests.Validators
+namespace PropertyApp.Application.UnitTests.Validators
 {
     public class RegisterUserValidatorTests
     {
@@ -49,16 +49,23 @@ namespace PropertyApp.Api.IntegrationTests.Validators
             _propertyAppContext.SaveChanges();
         }
 
+        private void setupRepositoryMock(string email)
+        {
+            _userRepositoryMock.Setup(u => u.FindyByEmail(It.IsAny<string>()))
+                .Returns(Task.FromResult(_propertyAppContext.Users.FirstOrDefault(u => u.Email == email)));
+        }
+
         [Fact]
         public async Task Validate_ForEmailInUse_ReturnsFailure()
         {
-            var userAlreadyRegistered = _propertyAppContext.Users.First();
-          _userRepositoryMock.Setup(u => u.FindyByEmail(It.IsAny<string>()))
-                .Returns(Task.FromResult(_propertyAppContext.Users.FirstOrDefault(u => u.Email == userAlreadyRegistered.Email)));
+           
+            //arrange
+            var userAlreadyRegistered = _propertyAppContext.Users.First().Email;
+            setupRepositoryMock(userAlreadyRegistered);
 
             var registerUserCommand = new RegisterUserCommand()
             {
-                Email = userAlreadyRegistered.Email,
+                Email = userAlreadyRegistered,
                 FirstName = "Janek",
                 LastName = "Piotr",
                 Password = "1234",
@@ -66,17 +73,20 @@ namespace PropertyApp.Api.IntegrationTests.Validators
             };
 
             var registerUserValidator = new RegisterUserValidator(_userRepositoryMock.Object);
+
+            //act
             var result =await registerUserValidator.TestValidateAsync(registerUserCommand);
 
+            //assert
             result.ShouldHaveAnyValidationError();
         }
 
         [Fact]
         public async Task Validate_ForCorrectInput_ReturnsSuccess()
         {
+            //arrange
             var email = "test123@gmail.com";
-            _userRepositoryMock.Setup(u => u.FindyByEmail(It.IsAny<string>()))
-                  .Returns(Task.FromResult(_propertyAppContext.Users.FirstOrDefault(u => u.Email == email)));
+            setupRepositoryMock(email);
 
             var registerUserCommand = new RegisterUserCommand()
             {
@@ -87,9 +97,13 @@ namespace PropertyApp.Api.IntegrationTests.Validators
                 ConfirmPassword = "1234"
             };
 
+
             var registerUserValidator = new RegisterUserValidator(_userRepositoryMock.Object);
+
+            //act
             var result = await registerUserValidator.TestValidateAsync(registerUserCommand);
 
+            //assert
             result.ShouldNotHaveAnyValidationErrors();
         }
     }

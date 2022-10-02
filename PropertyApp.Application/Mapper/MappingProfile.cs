@@ -13,7 +13,7 @@ using PropertyApp.Application.Functions.Users.Queries.GetUser;
 
 namespace PropertyApp.Application.Mapper;
 
-internal class MappingProfile : Profile
+public class MappingProfile : Profile
 {
     public MappingProfile()
     {

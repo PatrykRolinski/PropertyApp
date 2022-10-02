@@ -28,6 +28,8 @@ namespace PropertyApp.Api.IntegrationTests
             _factory = factory;
             _client = _factory.CreateClient();
         }
+        private readonly Guid correctGuid = Guid.Parse("53bfba37-1b94-41e3-abfa-bbc7c8cc5ae9");
+        private readonly Guid incorrectGuid= Guid.NewGuid();
 
         private void SeedRestaurant(Property property)
         {
@@ -162,7 +164,7 @@ namespace PropertyApp.Api.IntegrationTests
             //arrange
             var property = new Property()
             {
-                CreatedById = Guid.Parse("53bfba37-1b94-41e3-abfa-bbc7c8cc5ae9"),
+                CreatedById = correctGuid,
                 Description = "Test"
             };
 
@@ -182,7 +184,7 @@ namespace PropertyApp.Api.IntegrationTests
             //arrange
             var property = new Property()
             {
-                CreatedById = Guid.Parse("33bfba37-1b94-41e3-abfa-bbc7c8cc5ae9"),
+                CreatedById = incorrectGuid,
                 Description = "Test"
             };
 
