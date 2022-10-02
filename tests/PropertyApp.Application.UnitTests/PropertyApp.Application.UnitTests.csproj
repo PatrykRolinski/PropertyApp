@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PropertyApp.Application\PropertyApp.Application.csproj" />
-    <ProjectReference Include="..\PropertyApp.Infrastructure\PropertyApp.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\PropertyApp.Application\PropertyApp.Application.csproj" />
+    <ProjectReference Include="..\..\PropertyApp.Infrastructure\PropertyApp.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
