@@ -32,10 +32,10 @@ public class UpdatePropertyHandler : IRequestHandler<UpdatePropertyCommand>
        await validator.ValidateAndThrowAsync(request, cancellationToken);
 
        var propertyToChange= await _propertyRepository.GetByIdAsync(request.Id);
-        if (propertyToChange == null)
-        {
-            throw new NotFoundException($"Property with {request.Id} id not found");
-        }
+       if (propertyToChange == null)
+       {
+           throw new NotFoundException($"Property with {request.Id} id not found");
+       }
         
 
        var property= _mapper.Map<UpdatePropertyCommand, Property>(request, propertyToChange);

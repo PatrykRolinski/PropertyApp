@@ -5,7 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using PropertyApp.Api.IntegrationTests.Helpers;
 using PropertyApp.Application.Functions.Properties.Commands.AddProperty;
+using PropertyApp.Application.Functions.Properties.Commands.UpdateProperty;
 using PropertyApp.Domain.Entities;
+using PropertyApp.Domain.Enums;
 using PropertyApp.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -210,6 +212,31 @@ namespace PropertyApp.Api.IntegrationTests
         }
 
         #endregion
+
+        //Tests for UpdateProperty
+        [Fact]
+        public async Task UpdateProperty_ValidCommand_ReturnsNoContent()
+        {
+            //arrange
+            var property = new Property()
+            {
+                CreatedById = correctGuid,
+                Description = "Test",
+                Price=100,
+                MarketType= MarketType.Primary
+            };
+            var updateCommand = new UpdatePropertyCommand() { Description = "Updated", Price=100, Country="Poland", Street="Warsaw",City="Street", ClosedKitchen=true};
+            SeedRestaurant(property);
+
+            //act
+            var response = await _client.PutAsync("api/property/" + property.Id, updateCommand.toJsonContent());
+            var stringPropertyAfterUpdate = await _client.GetAsync("api/property/" + property.Id).Result.Content.ReadAsStringAsync();
+            var propertyAfterUpdate = JsonConvert.DeserializeObject<Property>(stringPropertyAfterUpdate);
+
+            //assert
+            response.Should().HaveStatusCode(System.Net.HttpStatusCode.NoContent);
+            propertyAfterUpdate.Description.Should().Be("Updated");
+        }
 
     }
 }

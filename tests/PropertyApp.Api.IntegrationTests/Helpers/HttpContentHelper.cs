@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System;
 using System.Net.Http;
+using System.Text;
 
 namespace PropertyApp.Api.IntegrationTests.Helpers
 {
@@ -37,7 +39,15 @@ namespace PropertyApp.Api.IntegrationTests.Helpers
             return multipartFormContent;
             
         }
+        public static HttpContent toJsonContent(this object obj)
+        {
+          var jsonToString= JsonConvert.SerializeObject(obj);
+
+          return new StringContent(jsonToString, UnicodeEncoding.UTF8, "application/json");
+
+        }
     }
+
 }
 
 
