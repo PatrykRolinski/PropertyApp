@@ -214,6 +214,7 @@ namespace PropertyApp.Api.IntegrationTests
         #endregion
 
         //Tests for UpdateProperty
+        #region
         [Fact]
         public async Task UpdateProperty_ValidCommand_ReturnsNoContent()
         {
@@ -237,6 +238,7 @@ namespace PropertyApp.Api.IntegrationTests
             response.Should().HaveStatusCode(System.Net.HttpStatusCode.NoContent);
             propertyAfterUpdate.Description.Should().Be("Updated");
         }
+        #endregion
 
     }
 }
