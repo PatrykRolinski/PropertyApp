@@ -19,6 +19,7 @@ namespace PropertyApp.Api.IntegrationTests.ControllersTests
         private HttpClient _htttpClient;
         private WebApplicationFactory<Program> _factory;
         private User _user;
+        private Role _role;
 
         public AccountControllerTests(WebApplicationFactory<Program> factory)
         {
@@ -33,15 +34,17 @@ namespace PropertyApp.Api.IntegrationTests.ControllersTests
             });
             _htttpClient= _factory.CreateClient();
             _user = new User() { Email = "Test@gmail.com", FirstName="SomeName", LastName="SomeLastName", VerificationToken="Token" };
-            SeedUser(_user);
+            _role = new Role() { Name = "Member" };
+            SeedUser(_user, _role);
         }
 
-        private void SeedUser(User user)
+        private void SeedUser(User user, Role role)
         {
             var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
             using var scope = scopeFactory.CreateScope();
             var dbContext = scope.ServiceProvider.GetService<PropertyAppContext>();
             dbContext.Add(user);
+            dbContext.Add(role);
             dbContext.SaveChanges();
         }
 

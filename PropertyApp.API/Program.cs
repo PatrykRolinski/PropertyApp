@@ -58,20 +58,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddPropertyAppInfrastructure(builder.Configuration);
+builder.Services.AddPropertyAppInfrastructureAsync(builder.Configuration);
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddScoped<ExceptionHandlingMiddleware>();
 builder.Services.AddCors();
 
-
-
 var app = builder.Build();
 
-var scope = app.Services.CreateScope();
-var dummySeeder = scope.ServiceProvider.GetService<SeedData>();
-
-// Configure the HTTP request pipeline.
-dummySeeder.Seed();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

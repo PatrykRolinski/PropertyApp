@@ -1,10 +1,11 @@
 ﻿using Bogus;
+using Microsoft.EntityFrameworkCore;
 using PropertyApp.Domain.Entities;
 using PropertyApp.Domain.Enums;
 
 namespace PropertyApp.Infrastructure;
 
-public class SeedData
+public class SeedData : IAsyncDisposable
 {
     private readonly PropertyAppContext _context;
 
@@ -13,10 +14,19 @@ public class SeedData
         _context = context;
     }
 
+    public ValueTask DisposeAsync() => default;
+    
+    
+
     public void Seed()
     {
         if (_context.Database.CanConnect())
         {
+            var pendingMigrations = _context.Database.GetPendingMigrations();
+            if(pendingMigrations != null && pendingMigrations.Any())
+            {
+                _context.Database.Migrate();
+            }
             if (!_context.Roles.Any(x=>x.Name=="Admin"))
             {
                 var roles = new List<Role>()

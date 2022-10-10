@@ -32,18 +32,23 @@ namespace PropertyApp.Application.UnitTests.Properties
         }
 
         [Fact]
-        public void Handle_ValidQuery_ReturnPropertiesList()
+        public async void Handle_ValidQuery_ReturnPropertiesList()
         {
+            
+            
             //arrange
             var handler = new GetPropertiesListHandler(_mockRepo.Object, _mapper);
 
             //act
-            var result = handler.Handle(new GetPropertiesListQuery() { PageSize=5, PageNumber=1}, CancellationToken.None).Result;
-            var totalItems = result.TotalCount;
+            var totalCount = MockPropertyRepository.DummyPropertyList.Count;
+            var result =handler.Handle(new GetPropertiesListQuery() { PageSize=5, PageNumber=1}, CancellationToken.None).Result;
+            var totalItems =result.TotalCount;
             
             //assert
             result.Should().BeOfType<PageResult<GetPropertiesListDto>>();
-            totalItems.Should().Be(2);
+            totalItems.Should().Be(totalCount);
+
+            
         }
 
         [Theory]
